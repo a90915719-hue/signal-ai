@@ -725,6 +725,22 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   box-shadow: 0 4px 10px rgba(37,99,235,0.3);
 }
 
+/* 🏠 전국 정부 무료 집수리 · 보험 안내 */
+.gov-tel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.gov-tel{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;background:var(--surface);border:3px solid var(--blue);border-radius:18px;padding:14px 10px;text-align:center;color:var(--fg);min-width:0}
+.gov-tel .t-label{font-size:18px;font-weight:800;line-height:1.3;word-break:keep-all;overflow-wrap:anywhere}
+.gov-tel .t-num{font-family:var(--display);font-size:clamp(26px,8vw,38px);line-height:1.15;color:var(--blue);font-variant-numeric:tabular-nums;white-space:nowrap}
+.gov-tel .t-tap{font-size:14px;font-weight:700;color:var(--muted)}
+.gov-tel:active{transform:translateY(2px)}
+.gov-tel.go{border-color:var(--go)}
+.gov-tel.go .t-num{color:var(--go)}
+.gov-card{background:var(--surface);border:3px solid var(--line);border-radius:18px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.gov-card.big{border-color:var(--blue);box-shadow:0 6px 20px rgba(31,91,214,0.12)}
+.gov-card > b{font-size:22px;line-height:1.3;word-break:keep-all}
+.gov-card .gsub{font-size:17px;font-weight:700;color:var(--muted);line-height:1.5;word-break:keep-all}
+.gov-card .gsub b{color:var(--fg)}
+.gov-card ul{margin:0;padding-left:1.1em;font-size:19px;display:flex;flex-direction:column;gap:6px;word-break:keep-all}
+
 /* ==========================================================
    📱 핸드폰(390px 안팎) 화면에 맞춘 컴팩트 정리
    글씨 크기는 읽기 편하게 두고, 과하게 큰 여백·박스만 줄임
@@ -793,6 +809,15 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   #btnHomeKakao{padding:13px 14px !important;font-size:17px !important;border-radius:16px !important;margin-block:8px !important}
   #btnHomeVoice{padding:13px 12px !important;border-radius:16px !important;margin-top:8px !important}
   #btnHomeVoice span:nth-child(2){font-size:20px !important}
+  #btnHomeGovRepair{padding:13px 12px !important;font-size:17px !important;border-radius:16px !important;margin-block:8px !important}
+  #btnHomeGovRepair span:nth-child(2){font-size:18px !important}
+
+  /* 전국 정부 무료 집수리 · 보험 */
+  .gov-card{padding:14px 14px}
+  .gov-card > b{font-size:20px}
+  .gov-card .gsub{font-size:16px}
+  .gov-card ul{font-size:18px}
+  .gov-tel .t-label{font-size:16px}
 
   /* 하단 범례 · 하단 바 */
   .legend{font-size:14px;gap:8px 14px;margin-top:14px}
@@ -1775,6 +1800,12 @@ function home(){
       <span>나만의 공간 · 안심 기억장 (음성 메모·비밀수첩)</span>
     </button>
 
+    <!-- 🏠 전국 정부 무료 집수리 · 보험 안내 (집 고칠 돈 걱정될 때) -->
+    <button class="act" type="button" id="btnHomeGovRepair" onclick="govRepair()" style="background:linear-gradient(135deg, #0f766e, #14a44d); color:#fff; border:2.5px solid #5eead4; border-radius:18px; padding:16px 18px; font-size:19px; font-weight:900; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 6px 18px rgba(20,164,77,0.3); width:100%; margin-block:10px; cursor:pointer;">
+      <span style="font-size:26px;">🏠</span>
+      <span>전국 정부 무료 집수리 · 보험 안내</span>
+    </button>
+
     <div class="home-row">
       ${getMember() ? `<span class="member-chip">${esc(getMember().via)}(으)로 가입됨 · ${PLANS[qState().plan].name}</span>` : `<button class="login kakao small" type="button" id="signBtn">카카오로 3초 가입</button>`}
       <button class="act plain" type="button" id="planBtn">☕ 커피 한 잔 요금제 · 내 사용량</button>
@@ -1844,6 +1875,7 @@ const SERVICES = [
   {ico:"면", name:"교정시설 면회",     sub:"구치소 · 교도소 면회 예약",  g:"often",  fn:()=>visitJail(),   kw:"교도소 구치소 교정 면회 접견 적견 수감 수용자 영치금 스마트접견 화상접견 1363"},
   {ico:"새", name:"다시 시작 지원",    sub:"보호관찰소, 출소 후 자립 · 창업", g:"often", fn:()=>restart(),  kw:"보호관찰 보호관찰소 출소 출소자 자립 창업 갱생 법무보호 허그일자리 긴급지원 사회복귀"},
   {ico:"맥", name:"우리 동네 맥가이버", sub:"수도, 전기, 보일러 고장", g:"often", fn:()=>fixit(),   kw:"맥가이버 고장 수리 수도 물 샘 누수 변기 막힘 하수구 전기 두꺼비집 차단기 전등 가스 냄새 보일러 열쇠 도어락 방충망 철물점 조명 도배 장판 가전 냉장고 세탁기 집수리"},
+  {ico:"수", name:"정부 무료 집수리 · 보험", sub:"수선유지급여, 누수 보험 청구", g:"often", fn:()=>govRepair(), kw:"무료 집수리 정부 지원 수선급여 수선유지급여 주거급여 주거복지 에너지효율 단열 창호 방수 누수 보험 일배책 급배수 도배 장판 보일러 집 고치기 리모델링"},
   {ico:"이", name:"이사 · 부동산",     sub:"이삿짐센터, 동네 부동산, 시세", g:"often", fn:()=>moving(),    kw:"이사 이삿짐 포장이사 용달 부동산 공인중개사 중개 시세 매매 전세 월세 집 구하기 입주청소 전입신고"},
   {ico:"방", name:"전세 · 월세 찾기", sub:"집 찾기, 전세사기 막기", g:"often", fn:()=>rentHelp(), kw:"전세 월세 반전세 원룸 투룸 빌라 오피스텔 방 구하기 집 구하기 세입자 보증금 전세사기 확정일자 전입신고 보증보험 버팀목"},
   {ico:"땅", name:"분양 · 전원주택 · 토지", sub:"청약, 귀농귀촌, 땅 살 때", g:"often", fn:()=>estate(),   kw:"분양 청약 아파트 분양 전원주택 가든 주택 시골집 귀농 귀촌 토지 땅 매매 농지 기획부동산 지역주택조합"},
@@ -2032,49 +2064,59 @@ function processSmartVoiceSearch(q) {
     return;
   }
 
-  // (5) 맥가이버 집수리
-  if (/맥가이버|집수리|수리|수도|누수|보일러|변기|두꺼비집|전기/i.test(q)) {
+  // (5) 전국 정부 무료 집수리 · 보험 안내 (집수리 지원제도·누수 보험)
+  //     ※ 자동차·견인 이야기가 섮여 있으면 자동차 쪽으로 보낸다
+  if (!/자동차|차량|운전|견인|고속도로/.test(q) &&
+      /무료 ?집수리|정부 ?지원|정부지원|수선급여|수선유지|주거급여|주거복지|에너지효율|방수|도배|장판|집수리|누수|보일러|보험|집 ?고치/i.test(q)) {
+    speakGuide("전국 정부 무료 집수리와 보험 안내로 갑니다.");
+    if (status) status.innerHTML = `✅ <b>정부 무료 집수리 · 보험 안내</b>로 이동합니다...`;
+    setTimeout(() => { govRepair(); }, 800);
+    return;
+  }
+
+  // (6) 맥가이버 집수리
+  if (/맥가이버|수리|수도|변기|두꺼비집|전기/i.test(q)) {
     speakGuide("우리 동네 맥가이버 수리로 안내합니다.");
     setTimeout(() => { fixit(); }, 800);
     return;
   }
 
-  // (6) 말로 그림 그리기
+  // (7) 말로 그림 그리기
   if (/그림|영상|쇼츠|사진|꽃|그리기/i.test(q)) {
     speakGuide("말로 그림 그리기로 안내합니다.");
     setTimeout(() => { makeMenu(); }, 800);
     return;
   }
 
-  // (7) 긴급 전화 119/112
+  // (8) 긴급 전화 119/112
   if (/119|112|긴급|응급|사기|보이스피싱|위급|살려/i.test(q)) {
     speakGuide("긴급 전화로 즉시 연결합니다.");
     setTimeout(() => { emergency(); }, 800);
     return;
   }
 
-  // (8) 은행 금융
+  // (9) 은행 금융
   if (/은행|카드|통장|돈|대출|예금/i.test(q)) {
     speakGuide("은행 및 금융 안내로 이동합니다.");
     setTimeout(() => { finance(); }, 800);
     return;
   }
 
-  // (9) 5일장 장날
+  // (10) 5일장 장날
   if (/장날|5일장|오일장|시장/i.test(q)) {
     speakGuide("5일장 장날 정보로 안내합니다.");
     setTimeout(() => { market(); }, 800);
     return;
   }
 
-  // (10) 이사 부동산
+  // (11) 이사 부동산
   if (/이사|부동산|복덕방|집세|전세|월세/i.test(q)) {
     speakGuide("부동산 및 이사 정보로 안내합니다.");
     setTimeout(() => { moving(); }, 800);
     return;
   }
 
-  // 일반 키워드 매칭 (SERVICES 40개 매칭)
+  // 일반 키워드 매칭 (SERVICES 목록 전체 매칭)
   const words = q.replace(/[?!.]/g," ").split(/\s+/).filter(Boolean);
   const scored = SERVICES.map(s=>({s, n: words.reduce((a,w)=> a + ((s.kw+" "+s.name).split(" ").some(t=> t && (t.includes(w) || (w.length>1 && w.includes(t)))) ? 1 : 0), 0)}))
     .filter(x=>x.n>0).sort((a,b)=>b.n-a.n).slice(0,3).map(x=>x.s);
@@ -2208,13 +2250,22 @@ function sections(autoVoice){
             <span style="font-size:15px; color:var(--muted); font-weight:700;">수도, 누수, 보일러 고장, 만능 수리</span>
           </div>
         </button>
+
+        <!-- 7. 전국 정부 무료 집수리 · 보험 -->
+        <button type="button" onclick="govRepair()" style="background:var(--surface); border:2.5px solid #14a44d; border-radius:18px; padding:18px; text-align:left; cursor:pointer; display:flex; align-items:center; gap:14px; box-shadow:0 4px 12px rgba(20,164,77,0.12);">
+          <span style="font-size:34px; background:rgba(20,164,77,0.1); width:60px; height:60px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">🏠</span>
+          <div>
+            <b style="font-size:22px; font-weight:900; color:var(--fg); display:block;">전국 정부 무료 집수리 · 보험</b>
+            <span style="font-size:15px; color:var(--muted); font-weight:700;">수선유지급여, 에너지효율개선, 누수 보험 청구</span>
+          </div>
+        </button>
       </div>
     </div>
 
     <!-- 📋 전체 메뉴 40가지 (평소에는 깔끔히 접어두고 필요할 때만 펼침) -->
     <details style="background:var(--surface); border:2px solid var(--line); border-radius:18px; padding:16px 20px; margin-top:16px;">
       <summary style="font-size:18px; font-weight:900; color:var(--blue); cursor:pointer; list-style:none; display:flex; align-items:center; justify-content:space-between;">
-        <span>📋 그 외 모든 메뉴 40가지 전체 보기</span>
+        <span>📋 그 외 모든 메뉴 ${SERVICES.length}가지 전체 보기</span>
         <span style="font-size:20px;">▼</span>
       </summary>
       <div style="margin-top:20px;">
@@ -3966,11 +4017,14 @@ function fixit(){
         <li>문제가 생기면 <b>1372</b> 소비자상담센터</li>
       </ul>
     </div>
-    <div class="note-box"><b>어르신 집수리 무료 지원:</b> 지자체마다 어르신이나 형편이 어려운 집의 문턱, 손잡이, 보일러, 전기 같은 걸 무료나 싸게 고쳐주는 사업이 있어요. 주민센터에 "어르신 집수리 지원 있어요?" 하고 물어보세요.</div>
+    <div class="note-box"><b>어르신 집수리 무료 지원:</b> 내 집이면 나라가 도배·장판·보일러·지붕을 무료로 고쳐주는 제도가 있어요. 전국 공통 번호와 신청 방법을 한 화면에 모았습니다.
+      <button class="act primary" type="button" id="toGov" style="width:100%;margin-top:10px">전국 정부 무료 집수리 · 보험 안내 보기 ▶</button>
+    </div>
   </section>`;
   const $ = id=>document.getElementById(id);
   $("b").onclick = sections;
   bindRegion(fixit); bindCopy();
+  $("toGov").onclick = govRepair;
   app.querySelectorAll(".tile[data-f]").forEach(b=>b.onclick=()=>{ fixSel = b.dataset.f; fixit(); const p = $("fixPanel"); if(p) p.scrollIntoView({behavior:"smooth", block:"start"}); });
   let file = null;
   $("fxPh").onchange = ()=>{ file = $("fxPh").files[0] || null; $("fxPrev").innerHTML = file ? `<img class="ph-prev" src="${URL.createObjectURL(file)}" alt="고른 사진">` : ""; };
@@ -3993,6 +4047,150 @@ function fixit(){
       signal("green","다 됐어요");
     }catch(e){ signal("red","잠깐 문제가 생겼어요"); const a = $("fxAns"); if(a) a.textContent = (e && e.text) || "잠깐 문제가 생겼어요. 한 번 더 눌러주세요."; }
   };
+}
+
+/* ---------- 전국 정부 무료 집수리 · 보험 안내 ---------- */
+function govRepair(){
+  stopTour(); nextAction = null; signal("green", "전화번호를 눌러 바로 거세요");
+  const r = getRegion();
+  app.innerHTML = `<section class="screen">
+    <button class="back" type="button" id="b">◀ 뒤로</button>
+    <div class="step">전국 정부 무료 집수리 · 보험 안내</div>
+    <h1>집 고치는 돈, 나라와 보험으로 받으세요</h1>
+    <p class="lead">도배·장판·보일러·지붕·누수… 돈이 없어 미뤄둔 집수리, 먼저 <b>무료로 고쳐주는 제도</b>부터 확인하세요. 전국 어디서나 똑같이 씁니다.</p>
+
+    <h2 class="group">🏠 나라에서 무료로 고쳐주는 집수리</h2>
+
+    <div class="gov-card big">
+      <b>① LH 주거급여 · 수선유지급여</b>
+      <span class="gsub">소득이 적고 <b>내 집(자가)</b>에서 살면, 도배·장판·창호·지붕·욕실을 나라가 고쳐줍니다. 현금이 아니라 <b>공사로</b> 해줘요.</span>
+      <ul>
+        <li>대상: 내 집에 살면서 소득인정액이 <b>기준중위소득 48% 이하</b></li>
+        <li>경보수 <b>최대 590만원</b> — 도배·장판 등 (3년에 한 번)</li>
+        <li>중보수 <b>최대 1,095만원</b> — 창호·단열·난방 등 (5년에 한 번)</li>
+        <li>대보수 <b>최대 1,601만원</b> — 지붕·욕실·주방 등 (7년에 한 번)</li>
+        <li>만 65세 이상이면 <b>최대 50만원</b>, 장애인이면 <b>최대 380만원</b>을 더해 문턱 없애기·문 넓히기까지</li>
+      </ul>
+      <span class="gsub">신청은 주소지 <b>읍·면·동 행정복지센터</b>에서 "수선유지급여 신청할 수 있나요?" 하고 물어보세요. 복지로(bokjiro.go.kr)에서도 됩니다. 생계급여를 이미 받고 있다면 주거급여도 함께 나오는지 한 번 확인해 두세요.</span>
+    </div>
+
+    <div class="gov-tel-grid">
+      <a class="gov-tel" href="tel:16000777"><span class="t-label">LH 주거급여 상담<br>(수선유지급여)</span><span class="t-num">1600-0777</span><span class="t-tap">눌러서 바로 전화</span></a>
+      <a class="gov-tel" href="tel:16001004"><span class="t-label">LH 대표 (마이홈 콜센터)<br>주거급여는 5번</span><span class="t-num">1600-1004</span><span class="t-tap">눌러서 바로 전화</span></a>
+    </div>
+
+    <div class="local-btns">
+      ${ext("https://www.jgplus.go.kr", "주거급여플러스 · 받을 수 있는지 3분 자가진단", "act primary")}
+      ${ext("https://www.bokjiro.go.kr", "복지로에서 신청 · 조회")}
+    </div>
+
+    <div class="gov-card">
+      <b>② 한국에너지재단 · 저소득층 에너지효율개선</b>
+      <span class="gsub">단열·창호·바닥 공사와 <b>고효율 보일러</b>를 무료로 바꿔줍니다. 겨울에 춥고 난방비가 무서우면 꼭 신청하세요.</span>
+      <ul>
+        <li>대상: 기초생활수급자 · 차상위계층 · 지자체가 추천한 저소득가구</li>
+        <li>신청: <b>읍·면·동 행정복지센터</b>에서 "에너지효율개선 신청할게요" 하면 됩니다</li>
+        <li>① 수선유지급여를 받는 집은 이 사업 대상에서 빠져요 — <b>둘 중 하나만</b> 됩니다</li>
+      </ul>
+    </div>
+
+    <a class="gov-tel go" href="tel:16707653"><span class="t-label">한국에너지재단<br>에너지효율개선 상담</span><span class="t-num">1670-7653</span><span class="t-tap">눌러서 바로 전화</span></a>
+
+    <div class="gov-card">
+      <b>③ 그래도 막막하면 이 두 번호</b>
+      <ul>
+        <li><b>129</b> 보건복지상담센터 — 24시간. 긴급복지, 집수리 지원, 돌봄까지 무엇이든 물어보세요</li>
+        <li><b>110</b> 정부민원안내콜센터 — 어느 부서에 물어야 할지 모를 때. 우리 동네 행정복지센터로 연결해 줍니다</li>
+      </ul>
+    </div>
+
+    <div class="gov-tel-grid">
+      <a class="gov-tel go" href="tel:129"><span class="t-label">보건복지상담센터<br>24시간</span><span class="t-num">129</span><span class="t-tap">눌러서 바로 전화</span></a>
+      <a class="gov-tel go" href="tel:110"><span class="t-label">정부민원안내<br>콜센터</span><span class="t-num">110</span><span class="t-tap">눌러서 바로 전화</span></a>
+    </div>
+
+    <h2 class="group">📞 시·도별 주거복지 전화</h2>
+    <p class="hint left">우리 지역 번호를 눌러 바로 물어보세요. 급하면 여기서 바로 걸면 됩니다.</p>
+    <div class="gov-tel-grid">
+      <a class="gov-tel" href="tel:120"><span class="t-label">서울 · 다산콜센터</span><span class="t-num">120</span><span class="t-tap">눌러서 바로 전화</span></a>
+      <a class="gov-tel" href="tel:031120"><span class="t-label">경기 · 경기도콜센터</span><span class="t-num">031-120</span><span class="t-tap">눌러서 바로 전화</span></a>
+      <a class="gov-tel" href="tel:18117757"><span class="t-label">인천광역시 광역주거복지센터</span><span class="t-num">1811-7757</span><span class="t-tap">눌러서 바로 전화</span></a>
+      <a class="gov-tel" href="tel:0415720606"><span class="t-label">천안시주거복지종합지원센터</span><span class="t-num">041-572-0606</span><span class="t-tap">눌러서 바로 전화</span></a>
+      <a class="gov-tel" href="tel:0432867890"><span class="t-label">청주시주거복지센터</span><span class="t-num">043-286-7890</span><span class="t-tap">눌러서 바로 전화</span></a>
+      <a class="gov-tel go" href="tel:15443396"><span class="t-label">한국해비타트<br>집고치기 신청</span><span class="t-num">1544-3396</span><span class="t-tap">눌러서 바로 전화</span></a>
+    </div>
+    <p class="hint left">우리 지역 번호가 없어도 괜찮아요. <b>1600-0777</b>(LH)이나 <b>129</b>에 전화하면 우리 동네 담당 기관을 알려줍니다.</p>
+
+    <h2 class="group">🔎 우리 동네 주거복지센터 · 행정복지센터 찾기</h2>
+    ${regionBar()}
+    <div class="local-btns">
+      ${r ? ext(mapUrl(r + " 주거복지센터"), esc(r) + " 주거복지센터 · 네이버 지도", "act primary")
+            + ext(kakaoMapUrl(r + " 주거복지센터"), "주거복지센터 · 카카오맵")
+            + ext(mapUrl(r + " 행정복지센터"), esc(r) + " 행정복지센터 · 네이버 지도", "act primary")
+            + ext(kakaoMapUrl(r + " 행정복지센터"), "행정복지센터 · 카카오맵")
+          : `<p class="hint left">위 칸에 사는 동네(예: 천안시 송정동)를 적고 <b>저장</b>을 누르면 버튼이 생겨요.</p>`}
+    </div>
+
+    <h2 class="group">🧾 보험으로 집수리 받기 (누수 · 방수)</h2>
+    <div class="note-box">
+      <b>보험은 두 가지가 달라요.</b><br>
+      <b>아랫집</b>이 젖었으면 일배책, <b>우리 집</b>이 젖었으면 급배수시설누출 특약입니다. 내가 든 보험이 있는지부터 확인하세요.
+    </div>
+
+    <div class="gov-card">
+      <b>① 일상생활배상책임보험 (일배책)</b>
+      <span class="gsub">우리 집 물이 새서 <b>아랫집</b> 천장·벽지가 젖었을 때 — 남에게 입힌 피해를 대신 물어주는 보험이에요.</span>
+      <ul>
+        <li>아랫집 복구비 (천장·벽지·장판)</li>
+        <li>누수 탐지 · 철거 · 방수 공사비</li>
+        <li>집 화재보험, 자동차보험, 일부 카드·통신사 상품에 딸려 있는 경우가 많아요</li>
+      </ul>
+      <span class="gsub">내가 든 보험이 무엇인지 모르면, 보험사 고객센터에 "일배책 들어 있나요?" 하고 물어보세요.</span>
+    </div>
+
+    <div class="gov-card">
+      <b>② 주택화재보험 '급배수시설누출손해' 특약</b>
+      <span class="gsub">배관이 터져 <b>우리 집</b> 마루·벽지·천장이 젖었을 때 — 우리 집 피해를 보상받는 특약이에요.</span>
+      <ul>
+        <li>급배수시설(수도·난방 배관)에서 센 물로 생긴 손해를 보상</li>
+        <li>화재보험에 이 특약이 <b>들어 있는지</b> 먼저 확인하세요. 없으면 보상이 안 됩니다</li>
+      </ul>
+    </div>
+
+    <div class="gov-card big">
+      <b>③ 보험 청구에 꼭 필요한 서류 3가지</b>
+      <ul>
+        <li><b>공정별 견적서</b> — 사업자등록번호가 있는 업체가, 자재비와 노무비를 나눠서</li>
+        <li><b>누수 원인 · 피해 소견서</b> — 어디서 왜 샜는지, 어디까지 젖었는지</li>
+        <li><b>공사 전 · 중 · 후 사진과 영수증</b> — 견적 금액과 실제 낸 돈이 맞아야 해요</li>
+      </ul>
+      <span class="gsub"><b>사진은 공사를 시작하기 전에 먼저</b> 찍어두세요. 나중에 찍으면 보상이 줄어요.</span>
+    </div>
+
+    <div class="gov-card big">
+      <b>④ 시공 · 서류 상담 (천안 · 아산 · 충북)</b>
+      <span class="gsub">보험에 낼 견적서와 소견서, 사진까지 갖춰야 보상이 제대로 나옵니다. <b>천안 맥가이버(에스디이엔씨)</b>에서 보험 청구용 서류와 시공을 함께 도와드려요.</span>
+      <div class="local-btns">
+        ${ext("https://a90915719-hue.github.io/cheonan-macgyver/", "천안 맥가이버 공식 사이트 열기 ▶", "act primary")}
+        <a class="act plain" href="tel:01084387266">전화 상담 010-8438-7266</a>
+      </div>
+    </div>
+
+    <div class="note-box warn">
+      <b>이것만은 알아두세요</b><br>
+      ・ 나라 지원은 <b>공사로</b> 해주는 것이라 현금으로 주지 않습니다.<br>
+      ・ 집이 내 것이 아니면(월세·전세) 수선유지급여 대신 <b>임차급여</b>를 받습니다. 집수리는 집주인과 상의하고 <b>129</b>에 물어보세요.<br>
+      ・ 전화가 어려우면 이 화면을 그대로 보여주세요. "이 제도 신청하고 싶어요" 하면 됩니다.
+    </div>
+
+    <h2 class="group">다음에 할 일</h2>
+    <button class="next-btn" type="button" id="toFixit">우리 동네 수리 업체 부르기 ▶</button>
+    <p class="hint left">지원 대상이 아니거나 급한 누수·방수·도배는 우리 동네 맥가이버에게 물어보세요.</p>
+  </section>`;
+  const $ = id=>document.getElementById(id);
+  $("b").onclick = sections;
+  bindRegion(govRepair);
+  $("toFixit").onclick = fixit;
 }
 
 /* ---------- 이사 · 부동산 ---------- */
