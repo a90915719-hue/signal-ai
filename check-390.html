@@ -20,7 +20,7 @@ const H = +(q.get('h') || 844);
 const Y = +(q.get('y') || 0);
 const f = document.getElementById('f');
 f.width = 390; f.height = H;
-f.src = file;
+f.src = file + (file.includes('?')?'&':'?') + 'cb=' + (q.get('cb') || Date.now());
 f.onload = () => {
   const d = f.contentDocument, w = f.contentWindow;
   try{
