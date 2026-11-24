@@ -54,6 +54,10 @@
 body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:20px;line-height:1.55;padding-inline:16px;padding-block:20px 40px}
 .wrap{max-width:980px;margin:0 auto;display:grid;grid-template-columns:1fr 200px;gap:28px;align-items:start}
 @media (max-width:760px){.wrap{grid-template-columns:1fr}.signal-col{order:-1}}
+/* 🎬 홈 소개 영상: 상단 배너 바로 아래(휴대폰에서는 신호등보다 먼저) */
+.video-slot{grid-column:1 / -1;min-width:0}
+.video-slot[hidden]{display:none !important}
+@media (max-width:760px){.video-slot{order:-2}}
 
 .proto{max-width:980px;margin:0 auto 18px;font-size:15px;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:10px 14px}
 .brand{font-family:var(--display);font-size:30px;letter-spacing:.02em;display:flex;align-items:center;gap:10px;margin-bottom:6px}
@@ -965,6 +969,33 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
 
 
 <div class="wrap">
+  <div class="video-slot" id="homeVideoSlot">
+      <!-- 🎬 국민 AI 신호등 가족 소개 영상 (립싱크 브리핑) -->
+      <div class="video-card" style="background:linear-gradient(155deg, #0b1329 0%, #172554 100%); border:2.5px solid #fbbf24; border-radius:22px; padding:16px; box-shadow:0 12px 30px rgba(11,19,41,0.3); color:#ffffff;">
+        <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+          <span style="display:inline-flex; align-items:center; gap:6px; background:rgba(251,191,36,0.18); border:1px solid #fbbf24; color:#fde047; font-size:14px; font-weight:900; padding:4px 12px; border-radius:50px;">
+            🎬 국민 AI 신호등 가족 소개 영상 (립싱크 브리핑)
+          </span>
+          <span style="font-size:13px; font-weight:700; color:#bfdbfe;">🔊 아래 버튼 누르면 바로 재생</span>
+        </div>
+        <div style="border-radius:14px; overflow:hidden; background:#020617; border:1.5px solid rgba(255,255,255,0.2);">
+          <video id="familyIntroVideo" src="./가족영상.mp4" controls playsinline preload="metadata" style="width:100%; display:block; max-height:420px; background:#000;"></video>
+        </div>
+        <div class="guide-red"><span class="ic">🚨</span><span>위급할 때는 <b>신호등 밑에 빨간 긴급 버튼</b>을 누르시면 됩니다</span></div>
+        <div id="familyVideoMsg" style="display:none; margin-top:8px; padding:10px 12px; background:rgba(239,68,68,0.18); border:1px solid #f87171; border-radius:10px; font-size:14px; color:#fecaca; font-weight:700;">
+          ⚠️ 영상 파일(가족영상.mp4)을 불러오지 못했습니다. 같은 폴더에 가족영상.mp4가 있는지 확인해 주세요.
+        </div>
+        <button type="button" id="playFamilyVideoBtn" style="width:100%; margin-top:12px; background:linear-gradient(135deg, #f59e0b, #fbbf24); color:#0b1329; border:none; border-radius:14px; padding:14px 16px; font-size:19px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 18px rgba(245,158,11,0.4);">
+          <span>▶</span> <span>🔊 가족 소개 영상 소리 켜고 보기</span>
+        </button>
+        <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:10px;">
+          <button type="button" id="fvGuide" style="background:rgba(255,255,255,0.12); border:1.5px solid rgba(255,255,255,0.28); color:#fff; border-radius:12px; padding:10px 8px; font-size:15px; font-weight:800; cursor:pointer;">🚦 신호등 뜻</button>
+          <button type="button" id="fvFree" style="background:rgba(20,164,77,0.25); border:1.5px solid #4ade80; color:#dcfce7; border-radius:12px; padding:10px 8px; font-size:15px; font-weight:800; cursor:pointer;">🆓 평생무료 안전기능</button>
+          <button type="button" id="fvPlan" style="background:rgba(245,158,11,0.22); border:1.5px solid #fbbf24; color:#fef08a; border-radius:12px; padding:10px 8px; font-size:15px; font-weight:800; cursor:pointer;">☕ 커피 한 잔 요금제</button>
+          <button type="button" id="fvSpace" style="background:rgba(37,99,235,0.35); border:1.5px solid #93c5fd; color:#eff6ff; border-radius:12px; padding:10px 8px; font-size:15px; font-weight:800; cursor:pointer;">🔒 나만의 공간</button>
+        </div>
+      </div>
+  </div>
   <main id="app" aria-live="polite"></main>
   <aside class="signal-col" aria-label="AI 신호등">
     <div class="signal-name"><em>나만의 AI</em> 국민 신호등</div>
@@ -1663,32 +1694,7 @@ function home(){
   stopMemoVoice(true);
   stopVaultVoice();
   clearTimeout(timer); stopTour(); nextAction = null; signal("green", "파란 동그라미를 누르세요");
-  app.innerHTML = `<section class="screen">
-    <!-- 🎬 국민 AI 신호등 가족 소개 영상 (립싱크 브리핑) -->
-    <div class="video-card" style="background:linear-gradient(155deg, #0b1329 0%, #172554 100%); border:2.5px solid #fbbf24; border-radius:22px; padding:16px; box-shadow:0 12px 30px rgba(11,19,41,0.3); color:#ffffff;">
-      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-        <span style="display:inline-flex; align-items:center; gap:6px; background:rgba(251,191,36,0.18); border:1px solid #fbbf24; color:#fde047; font-size:14px; font-weight:900; padding:4px 12px; border-radius:50px;">
-          🎬 국민 AI 신호등 가족 소개 영상 (립싱크 브리핑)
-        </span>
-        <span style="font-size:13px; font-weight:700; color:#bfdbfe;">🔊 아래 버튼 누르면 바로 재생</span>
-      </div>
-      <div style="border-radius:14px; overflow:hidden; background:#020617; border:1.5px solid rgba(255,255,255,0.2);">
-        <video id="familyIntroVideo" src="./가족영상.mp4" controls playsinline preload="metadata" style="width:100%; display:block; max-height:420px; background:#000;"></video>
-      </div>
-      <div class="guide-red"><span class="ic">🚨</span><span>위급할 때는 <b>신호등 밑에 빨간 긴급 버튼</b>을 누르시면 됩니다</span></div>
-      <div id="familyVideoMsg" style="display:none; margin-top:8px; padding:10px 12px; background:rgba(239,68,68,0.18); border:1px solid #f87171; border-radius:10px; font-size:14px; color:#fecaca; font-weight:700;">
-        ⚠️ 영상 파일(가족영상.mp4)을 불러오지 못했습니다. 같은 폴더에 가족영상.mp4가 있는지 확인해 주세요.
-      </div>
-      <button type="button" id="playFamilyVideoBtn" style="width:100%; margin-top:12px; background:linear-gradient(135deg, #f59e0b, #fbbf24); color:#0b1329; border:none; border-radius:14px; padding:14px 16px; font-size:19px; font-weight:900; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; box-shadow:0 6px 18px rgba(245,158,11,0.4);">
-        <span>▶</span> <span>🔊 가족 소개 영상 소리 켜고 보기</span>
-      </button>
-      <div style="display:grid; grid-template-columns:repeat(2, 1fr); gap:8px; margin-top:10px;">
-        <button type="button" id="fvGuide" style="background:rgba(255,255,255,0.12); border:1.5px solid rgba(255,255,255,0.28); color:#fff; border-radius:12px; padding:10px 8px; font-size:15px; font-weight:800; cursor:pointer;">🚦 신호등 뜻</button>
-        <button type="button" id="fvFree" style="background:rgba(20,164,77,0.25); border:1.5px solid #4ade80; color:#dcfce7; border-radius:12px; padding:10px 8px; font-size:15px; font-weight:800; cursor:pointer;">🆓 평생무료 안전기능</button>
-        <button type="button" id="fvPlan" style="background:rgba(245,158,11,0.22); border:1.5px solid #fbbf24; color:#fef08a; border-radius:12px; padding:10px 8px; font-size:15px; font-weight:800; cursor:pointer;">☕ 커피 한 잔 요금제</button>
-        <button type="button" id="fvSpace" style="background:rgba(37,99,235,0.35); border:1.5px solid #93c5fd; color:#eff6ff; border-radius:12px; padding:10px 8px; font-size:15px; font-weight:800; cursor:pointer;">🔒 나만의 공간</button>
-      </div>
-    </div>
+  app.innerHTML = `<section class="screen" data-home="1">
 
     <div class="logo" role="img" aria-label="나만의 AI 국민 신호등 로고" style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
       <div style="width:58px; height:74px; flex-shrink:0; filter:drop-shadow(0 4px 12px rgba(251,191,36,0.5));">
@@ -1857,6 +1863,7 @@ function home(){
   bind("okHome", checkin);
   bind("wxHome", weather);
   bind("signBtn", signup);
+  if (window.syncHomeVideoSlot) window.syncHomeVideoSlot();
 }
 
 /* 모든 기능을 한 화면에: 신호등 색으로 네 묶음 */
@@ -1930,31 +1937,184 @@ function speakGuide(text) {
 }
 
 let navSpeechRec = null;
-let isNavListening = false;
+let isNavListening = false;   // 마이크가 켜져 있는 동안 true (자동 재시작 포함)
+let navKeepAlive = false;     // 사용자가 멈추기 전에는 스스로 다시 켜서 계속 듣기
+let navFinalText = "";        // 확정된 말씀
+let navInterimText = "";      // 아직 확정되기 전 말씀
+let navSilenceTimer = null;   // 말씀이 끊기고 3초 조용하면 자동으로 찾기
+let navNoSpeechTimer = null;  // 아무 말씀도 없을 때 넉넉히 기다려 주는 시간
+let navRestartTimer = null;
+let navRestartFails = 0;
+
+function navHeardText(){
+  return (navFinalText + " " + navInterimText).replace(/\s+/g, " ").trim();
+}
+function navSetStatus(html){
+  const s = document.getElementById("navVoiceStatus");
+  if (s) s.innerHTML = html;
+}
+function navListeningUI(on){
+  const btn = document.getElementById("btnNavVoice");
+  const label = document.getElementById("navVoiceLabel");
+  const mic = document.getElementById("navMicIcon");
+  if (btn) {
+    btn.style.background = on ? "linear-gradient(135deg, #b91c1c, #ef4444)" : "linear-gradient(135deg, #1e40af, #2563eb)";
+    btn.style.boxShadow = on ? "0 0 0 5px rgba(239,68,68,0.4)" : "0 6px 18px rgba(37,99,235,0.35)";
+  }
+  if (mic) mic.innerText = on ? "🔴" : "🎤";
+  if (label) label.innerText = on ? "⏹️ 다 말했어요 · 찾기" : "마이크 누르고 말씀하세요";
+}
+function navClearTimers(){
+  clearTimeout(navSilenceTimer); navSilenceTimer = null;
+  clearTimeout(navNoSpeechTimer); navNoSpeechTimer = null;
+  clearTimeout(navRestartTimer); navRestartTimer = null;
+}
+function navStopRec(){
+  const rec = navSpeechRec;
+  navSpeechRec = null;
+  if (!rec) return;
+  try { rec.onend = null; } catch(e){}
+  try { rec.onresult = null; } catch(e){}
+  try { rec.onerror = null; } catch(e){}
+  try { rec.abort(); } catch(e){}
+  try { rec.stop(); } catch(e){}
+}
+function navRetryLater(SpeechRecognition){
+  if (!navKeepAlive) return;
+  if (navRestartFails >= 5) {
+    navGiveUp("마이크를 다시 켜지 못했어요. 🎤 버튼을 한 번 더 눌러 주세요.");
+    return;
+  }
+  clearTimeout(navRestartTimer);
+  navRestartTimer = setTimeout(() => {
+    if (navKeepAlive) navMakeRecognizer(SpeechRecognition);
+  }, 300 + navRestartFails * 200);
+}
+function navGiveUp(msg){
+  navKeepAlive = false;
+  isNavListening = false;
+  navClearTimers();
+  navStopRec();
+  navListeningUI(false);
+  navSetStatus("<span style='color:#dc2626; font-weight:800;'>" + msg + "</span>");
+}
+
+/* 마이크 끄기 (찾지 않고 그냥 멈춤: 화면을 떠날 때 등) */
+function stopNavVoice(){
+  navKeepAlive = false;
+  isNavListening = false;
+  navClearTimers();
+  navStopRec();
+  navListeningUI(false);
+}
+
+/* 다 듣고 실제 검색 실행 (버튼을 누르셨거나, 3초 조용해졌을 때) */
+function finishNavVoice(fromSilence){
+  const q = navHeardText();
+  navKeepAlive = false;
+  isNavListening = false;
+  navClearTimers();
+  navStopRec();
+  navListeningUI(false);
+  if (!q) {
+    navSetStatus("<b style='color:var(--muted);'>아직 말씀이 들리지 않았어요.</b> 🎤 버튼을 다시 누르고 천천히 말씀해 주세요.");
+    signal("green", "다시 말씀해 주세요");
+    return;
+  }
+  navSetStatus((fromSilence ? "✅ 말씀이 끝난 것 같아 찾아볼게요: " : "✅ 찾아볼 말씀: ") + "\"" + escapeHtml(q) + "\"");
+  try { processSmartVoiceSearch(q); } catch(e) { console.error("Search failed:", e); }
+}
 
 function toggleNavVoice() {
-  if (isNavListening) {
-    stopNavVoice();
+  if (isNavListening || navKeepAlive) {
+    finishNavVoice(false);   // [⏹️ 다 말했어요 · 찾기] → 들린 말씀으로 바로 찾기
   } else {
     startNavVoice();
   }
 }
 
-function stopNavVoice() {
-  isNavListening = false;
-  if (navSpeechRec) {
-    try { navSpeechRec.stop(); } catch(e){}
-    navSpeechRec = null;
+function navMakeRecognizer(SpeechRecognition){
+  let rec;
+  try {
+    rec = new SpeechRecognition();
+  } catch(e) {
+    navRestartFails++;
+    navRetryLater(SpeechRecognition);
+    return;
   }
-  const btn = document.getElementById('btnNavVoice');
-  const label = document.getElementById('navVoiceLabel');
-  const mic = document.getElementById('navMicIcon');
-  if (btn) {
-    btn.style.background = "linear-gradient(135deg, #1e40af, #2563eb)";
-    btn.style.boxShadow = "0 6px 18px rgba(37,99,235,0.35)";
+  rec.lang = "ko-KR";
+  rec.continuous = true;       // 숨을 고르셔도 끊기지 않게 계속 듣기
+  rec.interimResults = true;   // 말하는 도중에도 바로바로 받아 적기
+  rec.maxAlternatives = 1;
+
+  rec.onstart = function(){
+    if (!navKeepAlive) { try { rec.abort(); } catch(e){} return; }
+    navSpeechRec = rec;
+    isNavListening = true;
+    navRestartFails = 0;
+    navListeningUI(true);
+    if (!navHeardText()) {
+      signal("yellow", "말씀을 듣고 있어요");
+      navSetStatus("<b style='color:#ef4444;'>🎙️ 귀 기울여 듣고 있습니다...</b><br>숨을 고르시거나 천천히 말씀하셔도 마이크는 꺼지지 않아요.<br>말씀을 마치시면 <b>3초 뒤에 알아서 찾아</b> 드립니다. 다 말씀하셨으면 <b>[⏹️ 다 말했어요 · 찾기]</b>를 눌러 주세요.");
+    }
+  };
+
+  rec.onresult = function(e){
+    let interim = "";
+    for (let i = e.resultIndex; i < e.results.length; ++i) {
+      const t = e.results[i][0].transcript;
+      if (e.results[i].isFinal) navFinalText = (navFinalText + " " + t).trim();
+      else interim += t;
+    }
+    navInterimText = interim.trim();
+    const heard = navHeardText();
+    const input = document.getElementById("findQ");
+    if (input && heard) input.value = heard;
+    if (heard) {
+      navSetStatus("<b style='color:#ef4444;'>들린 말씀:</b> \"" + escapeHtml(heard) + "\"<br><span style='font-size:14px; color:var(--muted);'>3초 조용하면 자동으로 찾아드려요. 더 하실 말씀이 있으면 이어서 말씀하세요.</span>");
+    }
+    // 말씀이 이어지는 동안에는 찾기 신호를 계속 미룸 (숨 고르기 허용)
+    clearTimeout(navSilenceTimer);
+    navSilenceTimer = setTimeout(() => {
+      if (navKeepAlive) finishNavVoice(true);
+    }, 3000);
+    clearTimeout(navNoSpeechTimer);
+    navNoSpeechTimer = null;
+  };
+
+  rec.onerror = function(err){
+    const code = err && err.error;
+    if (code === "not-allowed" || code === "service-not-allowed") {
+      navGiveUp("마이크 사용이 허용되지 않았습니다. 브라우저 주소창의 자물쇠(또는 ⋮)에서 마이크를 '허용'으로 바꿔 주세요.");
+      return;
+    }
+    if (code === "audio-capture") {
+      navGiveUp("마이크를 찾을 수 없습니다. 마이크 연결을 확인하시거나 아래 검색창에 직접 적어 주세요.");
+      return;
+    }
+    /* 'no-speech' · 'aborted' · 'network' 등은 조용히 넘기고 아래 onend에서 다시 듣습니다 */
+  };
+
+  rec.onend = function(){
+    if (navSpeechRec === rec) navSpeechRec = null;
+    if (navInterimText) {
+      navFinalText = (navFinalText + " " + navInterimText).trim();
+      navInterimText = "";
+      const input = document.getElementById("findQ");
+      if (input && navFinalText) input.value = navFinalText;
+    }
+    if (!navKeepAlive) return;          // 사용자가 멈췄거나 이미 찾기 시작함
+    navRetryLater(SpeechRecognition);   // 끊겨도 스스로 다시 켜서 계속 듣기
+  };
+
+  try {
+    rec.start();
+    navSpeechRec = rec;
+    isNavListening = true;
+  } catch(e) {
+    navRestartFails++;
+    navRetryLater(SpeechRecognition);
   }
-  if (mic) mic.innerText = "🎤";
-  if (label) label.innerText = "마이크 누르고 말씀하세요";
 }
 
 function startNavVoice() {
@@ -1963,65 +2123,33 @@ function startNavVoice() {
     alert("음성 인식을 지원하지 않는 브라우저입니다. 아래 검색창에 직접 적어주세요.");
     return;
   }
+  navKeepAlive = false;
+  navClearTimers();
+  navStopRec();
+  navFinalText = "";
+  navInterimText = "";
+  navRestartFails = 0;
+  const input = document.getElementById("findQ");
+  if (input) input.value = "";
 
-  stopNavVoice();
+  navKeepAlive = true;
+  isNavListening = true;
+  navListeningUI(true);
+  navSetStatus("<b style='color:#ef4444;'>🎙️ 마이크를 켜는 중입니다...</b>");
+  navMakeRecognizer(SpeechRecognition);
 
-  try {
-    navSpeechRec = new SpeechRecognition();
-    navSpeechRec.lang = 'ko-KR';
-    navSpeechRec.continuous = false;
-    navSpeechRec.interimResults = true;
-
-    const btn = document.getElementById('btnNavVoice');
-    const label = document.getElementById('navVoiceLabel');
-    const mic = document.getElementById('navMicIcon');
-    const status = document.getElementById('navVoiceStatus');
-    const input = document.getElementById('findQ');
-
-    navSpeechRec.onstart = function() {
-      isNavListening = true;
-      signal("yellow", "말씀을 듣고 있어요");
-      if (btn) {
-        btn.style.background = "linear-gradient(135deg, #b91c1c, #ef4444)";
-        btn.style.boxShadow = "0 0 0 5px rgba(239,68,68,0.4)";
-      }
-      if (mic) mic.innerText = "🔴";
-      if (label) label.innerText = "듣고 있습니다... 말씀하세요";
-      if (status) status.innerHTML = "<b style='color:#ef4444;'>🎙️ 귀 기울여 듣고 있습니다...</b> \"제주도 약국\", \"서귀포 병원\", \"날씨\", \"생일\" 등 편하게 말씀하세요.";
-    };
-
-    navSpeechRec.onresult = function(e) {
-      let resultText = '';
-      for (let i = e.resultIndex; i < e.results.length; ++i) {
-        resultText += e.results[i][0].transcript;
-      }
-      if (input) input.value = resultText;
-      if (status) status.innerHTML = `<b style='color:#ef4444;'>들린 내용:</b> "${escapeHtml(resultText)}"`;
-    };
-
-    navSpeechRec.onerror = function(err) {
-      console.warn("Nav speech err:", err);
-      stopNavVoice();
-    };
-
-    navSpeechRec.onend = function() {
-      stopNavVoice();
-      const q = input ? input.value.trim() : '';
-      if (q) {
-        processSmartVoiceSearch(q);
-      }
-    };
-
-    navSpeechRec.start();
-  } catch(e) {
-    console.error("Nav speech init failed:", e);
-    stopNavVoice();
-  }
+  // 아무 말씀도 안 하실 때: 바로 끄지 않고 30초 넉넉히 기다림
+  navNoSpeechTimer = setTimeout(() => {
+    if (!navKeepAlive) return;
+    if (navHeardText()) return;
+    navGiveUp("아직 말씀이 안 들렸어요. 준비되시면 🎤 버튼을 다시 눌러 주세요.");
+  }, 30000);
 }
 
 /* 🌟 [캡틴 특명] 말로 지역과 세션을 연결하는 지능형 검색 엔진 */
 function processSmartVoiceSearch(q) {
   if (!q) return;
+  if (isNavListening || navKeepAlive) stopNavVoice();  // 찾기 시작했으니 마이크는 닫기
   const status = document.getElementById('navVoiceStatus');
   const out = document.getElementById('findOut');
 
@@ -7130,6 +7258,27 @@ document.getElementById("demoRed").onclick = ()=>{
     <button class="act primary" type="button" id="ok">처음으로 돌아가기</button></section>`;
   document.getElementById("ok").onclick = home;
 };
+
+/* 🎬 홈 소개 영상은 홈 화면일 때만 상단에 보이게 (다른 화면에서는 영상이 위를 가리지 않게) */
+(function(){
+  const slot = document.getElementById("homeVideoSlot");
+  const appEl = document.getElementById("app");
+  if (!slot || !appEl) return;
+  const sync = () => {
+    const onHome = !!appEl.querySelector('[data-home="1"]');
+    if (!onHome && !slot.hidden) {
+      const v = document.getElementById("familyIntroVideo");
+      if (v && !v.paused) { try { v.pause(); } catch(e){} }
+    }
+    slot.hidden = !onHome;
+    // 기능 찾기 화면을 떠나면 마이크도 함께 정리 (다른 화면에서 저절로 찾아가지 않도록)
+    if (!document.getElementById("btnNavVoice") && (navKeepAlive || isNavListening)) stopNavVoice();
+  };
+  window.syncHomeVideoSlot = sync;
+  try { new MutationObserver(sync).observe(appEl, {childList:true, subtree:true}); } catch(e){}
+  sync();
+})();
+
 home();
 
 // 전역 버튼 안전 바인딩 (누르면 100% 즉시 열림)
