@@ -750,6 +750,9 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
    📱 핸드폰(390px 안팎) 화면에 맞춘 컴팩트 정리
    글씨 크기는 읽기 편하게 두고, 과하게 큰 여백·박스만 줄임
    ========================================================== */
+/* 모바일에서만 쓰는 짧은 문구 (PC는 원래 문구 그대로) */
+.hdr-short,.lbl-short{display:none}
+
 @media (max-width:480px){
   body{padding-inline:10px;padding-block:10px 28px;font-size:18px}
   .wrap{gap:14px}
@@ -841,11 +844,93 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   #pwaInstallBanner .pwa-sub{display:none}
   .upgrade{padding:12px}
   .up-card{padding:18px;border-radius:20px}
+
+  /* ==========================================================
+     🎬 2026-11-24 모바일 정리
+     ① 상단 파란 배너 슬림화  ② 소개 영상 확대
+     ③ 아래쪽 중복·장식 빼고 축소  ④ 꼭 필요한 곳만 빨간 강조
+     ========================================================== */
+  /* 카드가 화면 폭을 더 넓게 쓰도록 (좌우 여백 26px → 10px) */
+  .page-shell{padding-inline:0 !important}
+
+  /* ① 상단 헤더: 약 95px 슬림 바 (로고 + 한 줄 제목 + 한 줄 부제 + 미니 버튼 한 줄) */
+  header{padding:12px 12px !important;border-radius:14px !important;margin-bottom:8px !important;border-width:1.5px !important}
+  header > div{gap:9px !important;align-items:center !important;justify-content:flex-start !important;flex-wrap:nowrap !important}
+  header > div > div:first-child{width:32px !important;height:42px !important}
+  header h1{font-size:18px !important;line-height:1.15 !important;margin:0 0 3px !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  header h1 .hdr-en{display:none !important}
+  header p{font-size:12px !important;line-height:1.2 !important;margin:0 !important;color:#bfdbfe !important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  header p .hdr-long{display:none !important}
+  header p .hdr-short{display:inline !important}
+  header > div > div:nth-child(2) > div:last-child{margin-top:6px !important;gap:6px !important;flex-wrap:nowrap !important}
+  header > div > div:nth-child(2) > div:last-child button{font-size:12px !important;padding:6px 10px !important;box-shadow:none !important}
+  header .lbl-long{display:none !important}
+  header .lbl-short{display:inline !important}
+
+  /* ② 소개 영상: 화면 폭 꽉 차게(390px) + 16:9 그대로 크게 */
+  .video-slot{margin-inline:calc(50% - 50vw) !important}
+  .video-card{padding:0 !important;border-radius:0 !important;border-left:0 !important;border-right:0 !important;box-shadow:none !important}
+  .video-card > div:first-child{padding:9px 12px 0 !important;margin-bottom:6px !important;gap:6px !important}
+  .video-card > div:nth-child(2){border-radius:0 !important;border-left:0 !important;border-right:0 !important}
+  #familyIntroVideo{width:100% !important;max-height:none !important;aspect-ratio:16/9 !important;display:block}
+  .video-card > .guide-red{margin:8px 12px 0 !important;padding:9px 11px !important;font-size:13.5px !important;border-radius:12px !important}
+  .video-card #familyVideoMsg{margin:8px 12px 0 !important;font-size:13px !important}
+  #playFamilyVideoBtn{margin:8px 12px 0 !important;width:calc(100% - 24px) !important;padding:12px 10px !important;font-size:17px !important}
+  .video-card > div:last-child{padding:0 12px 12px !important;gap:7px !important;margin-top:8px !important;grid-template-columns:repeat(2,minmax(0,1fr)) !important}
+  #fvGuide,#fvFree,#fvPlan,#fvSpace{padding:10px 6px !important;font-size:14px !important;min-height:44px}
+
+  /* ③ 중복 문구·장식 덜어내기 */
+  section[data-home] > .logo{display:none !important}      /* 헤더와 똑같은 로고·이름 반복 */
+  .signal-name{display:none !important}                    /* 헤더와 같은 제목 */
+  .sos-hint{display:none !important}                       /* 영상 카드의 빨간 안내와 같은 문장 */
+  #btnSideMySpace{display:none !important}                 /* 아래 '나만의 공간' 큰 버튼과 같은 기능 */
+  .guide-foot{display:none !important}                     /* 맨 아래 장식 문구 */
+  .screen{gap:12px}
+
+  /* ③ 남는 부분은 아담하게 */
+  h1.home-title{font-size:24px !important;line-height:1.25 !important}
+  .big-start{width:min(160px,44vw) !important;font-size:30px !important;margin-block:4px !important}
+  .hint{font-size:14px !important;line-height:1.35 !important}
+  .home-guide{padding:11px 11px !important;border-radius:14px !important;margin-bottom:10px !important;border-width:2px !important}
+  .home-guide > div:first-child{margin-bottom:8px !important}
+  .home-guide > div:first-child span:last-child{font-size:16px !important}
+  .home-guide div[style*="font-size:16px"]{gap:6px !important;font-size:14px !important;line-height:1.4 !important}
+  .home-guide div[style*="font-size:16px"] > div{padding:6px 9px !important;border-radius:7px !important}
+  .free-promise{padding:9px 10px;border-radius:14px;border-width:2.5px;gap:4px}
+  .free-promise b{font-size:18px}
+  .free-promise .fp-row{gap:5px}
+  .free-promise .fp-row span{font-size:12.5px;padding:3px 8px}
+  .home-row{gap:6px}
+  .home-row .okay-mini{font-size:15px;padding:9px 14px}
+  .home-row .act{font-size:15px;padding:9px 12px}
+  .intro-link{font-size:14px;padding:6px 10px}
+  #btnHomeMySpace{padding:11px 10px !important;font-size:16px !important;border-radius:14px !important;margin-block:8px !important}
+  #btnHomeMySpace span:first-child{font-size:20px !important}
+  #btnHomeGovRepair{padding:11px 10px !important;font-size:15.5px !important;border-radius:14px !important;margin-block:7px !important}
+  #btnHomeGovRepair span:nth-child(2){font-size:16px !important}
+  #btnHomeKakao{padding:11px 12px !important;font-size:15.5px !important;border-radius:14px !important;margin-block:7px !important}
+  #btnHomeVoice{padding:9px 12px !important;border-radius:14px !important;margin-top:8px !important}
+  #btnHomeVoice span:nth-child(1){font-size:22px !important}
+  #btnHomeVoice span:nth-child(2){font-size:17px !important}
+  #btnHomeVoice span:nth-child(3){font-size:12px !important}
+  .legend{grid-template-columns:repeat(2,minmax(0,1fr)) !important;font-size:12.5px !important;gap:6px 10px !important;margin-top:10px !important}
+  .legend div{gap:6px}
+  .legend b{width:14px;height:14px}
+  .demo-red{font-size:12.5px}
+
+  /* ④ 꼭 필요한 곳만 빨간 강조: 긴급 버튼 + 위급 안내 + 빨간불 주의 */
+  .signal-col{gap:8px}
+  .signal{padding:7px 10px !important}
+  .signal .lamp{width:32px !important;height:32px !important}
+  .signal-text{font-size:15px;min-height:0}
+  .sos-btn{font-size:20px !important;padding:12px 10px !important;border:2.5px solid #fecaca !important;border-radius:14px !important;letter-spacing:-0.3px;box-shadow:0 5px 0 #8A2018,0 0 0 4px rgba(220,38,38,0.16)}
+  .fs-box{padding:7px 9px !important}
+  .home-guide .g-red{background:rgba(220,38,38,0.16) !important;border-left-width:5px !important;box-shadow:inset 0 0 0 1.5px rgba(220,38,38,0.35)}
 }
 </style>
 </head>
 <body>
-<div style="max-width:980px; margin:0 auto; padding-inline:16px;">
+<div class="page-shell" style="max-width:980px; margin:0 auto; padding-inline:16px;">
 
 <!-- 🌟 나만의 AI (My Own AI) · 대한민국 국민 신호등 공식 헤더 배너 -->
 <header style="background:linear-gradient(135deg, #0b1329 0%, #1e3a8a 50%, #2563eb 100%); color:#ffffff; padding:20px 22px; border-radius:24px; margin-bottom:20px; box-shadow:0 10px 30px rgba(0,0,0,0.3), 0 0 20px rgba(37,99,235,0.4); border:2.5px solid rgba(251,191,36,0.4);">
@@ -947,18 +1032,18 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
         <span>★</span> <span>대한민국 국민 누구나 무료 생활비서 (v3.0 음성 안내 & 말로 찾는 스마트 내비 탑재)</span> <span>★</span>
       </div>
       <h1 style="margin:0 0 6px; font-size:26px; font-weight:900; letter-spacing:-0.5px; line-height:1.2; color:#ffffff; text-shadow:0 2px 6px rgba(0,0,0,0.5);">
-        🌟 나만의 AI (MY OWN AI) · 국민 신호등
+        🌟 나만의 AI <span class="hdr-en">(MY OWN AI) ·</span> 국민 신호등
       </h1>
       <p style="margin:0 0 10px; font-size:15px; font-weight:600; color:#dbeafe; letter-spacing:-0.3px; line-height:1.4;">
-        가입 NO! 다운로드 NO! 오직 <b>손가락 하나</b>만 누르면 말벗·그림·음성기억장 1초 해결!
+        <span class="hdr-long">가입 NO! 다운로드 NO! 오직 <b>손가락 하나</b>만 누르면 말벗·그림·음성기억장 1초 해결!</span><span class="hdr-short">가입·설치 없이 손가락 하나로 1초 해결</span>
       </p>
       
       <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;">
         <button type="button" onclick="shareKakaoApp()" style="display:inline-flex; align-items:center; gap:6px; background:#fee500; color:#191919; font-size:14px; font-weight:900; padding:8px 16px; border-radius:20px; border:none; cursor:pointer; box-shadow:0 4px 12px rgba(254,229,0,0.4);">
-          <span style="font-size:16px;">💬</span> <span>카카오톡으로 지인에게 보내기</span>
+          <span style="font-size:16px;">💬</span> <span><span class="lbl-long">카카오톡으로 지인에게 보내기</span><span class="lbl-short">카톡공유</span></span>
         </button>
         <button type="button" onclick="openInstallGuide()" style="display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,0.15); border:1.5px solid rgba(255,255,255,0.4); color:#ffffff; font-size:13px; font-weight:800; padding:8px 14px; border-radius:20px; cursor:pointer; backdrop-filter:blur(4px);">
-          <span>📱</span> <span>홈화면에 앱 추가 ➔</span>
+          <span>📱</span> <span><span class="lbl-long">홈화면에 앱 추가 ➔</span><span class="lbl-short">앱추가</span></span>
         </button>
       </div>
 
@@ -1762,7 +1847,7 @@ function home(){
         <div class="logo-sub" style="font-size:15px; font-weight:800; color:var(--blue);">말 한마디면 뭐든지 되는 1초 생활비서</div>
       </div>
     </div>
-    <h1>무엇이든지 가능합니다.<br>버튼만 눌러보세요.</h1>
+    <h1 class="home-title">무엇이든지 가능합니다.<br>버튼만 눌러보세요.</h1>
     <button class="big-start" id="go" type="button">누르기</button>
     <p class="hint" style="font-size:18px; font-weight:800; color:var(--blue); margin-top:8px;">👉 파란 동그라미를 누르면 "무엇을 찾으세요?" 하고 소리로 친절히 안내합니다!</p>
 
@@ -1773,7 +1858,7 @@ function home(){
       </div>
 
       <div style="display:flex; flex-direction:column; gap:10px; font-size:16px; font-weight:700; line-height:1.5;">
-        <div style="display:flex; align-items:flex-start; gap:10px; background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:8px 12px; border-radius:8px;">
+        <div class="g-red" style="display:flex; align-items:flex-start; gap:10px; background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:8px 12px; border-radius:8px;">
           <span style="font-size:18px; flex-shrink:0;">🔴</span>
           <div><b style="color:#ef4444;">빨간불 (위험할 때)</b>: 119 긴급전화, 보이스피싱 사기 조심</div>
         </div>
@@ -1788,7 +1873,7 @@ function home(){
           <div><b style="color:#16a34a;">초록불 (말벗/그림)</b>: 말로 그림 그리기, 오늘 날씨, 말벗 대화</div>
         </div>
       </div>
-      <div style="margin-top:10px; font-size:13px; font-weight:800; color:var(--muted); text-align:center;">
+      <div class="guide-foot" style="margin-top:10px; font-size:13px; font-weight:800; color:var(--muted); text-align:center;">
         ★ 타자 칠 필요 없이 손가락으로 누르고 말만 하시면 다 됩니다!
       </div>
     </div>
@@ -6648,7 +6733,7 @@ function plans(){
       </div>
 
       <div style="display:flex; flex-direction:column; gap:10px; font-size:16px; font-weight:700; line-height:1.5;">
-        <div style="display:flex; align-items:flex-start; gap:10px; background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:8px 12px; border-radius:8px;">
+        <div class="g-red" style="display:flex; align-items:flex-start; gap:10px; background:rgba(239,68,68,0.08); border-left:4px solid #ef4444; padding:8px 12px; border-radius:8px;">
           <span style="font-size:18px; flex-shrink:0;">🔴</span>
           <div><b style="color:#ef4444;">빨간불 (위험할 때)</b>: 119 긴급전화, 보이스피싱 사기 조심</div>
         </div>
@@ -6663,7 +6748,7 @@ function plans(){
           <div><b style="color:#16a34a;">초록불 (말벗/그림)</b>: 말로 그림 그리기, 오늘 날씨, 말벗 대화</div>
         </div>
       </div>
-      <div style="margin-top:10px; font-size:13px; font-weight:800; color:var(--muted); text-align:center;">
+      <div class="guide-foot" style="margin-top:10px; font-size:13px; font-weight:800; color:var(--muted); text-align:center;">
         ★ 타자 칠 필요 없이 손가락으로 누르고 말만 하시면 다 됩니다!
       </div>
     </div>
