@@ -925,6 +925,10 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   .signal-text{font-size:15px;min-height:0}
   .sos-btn{font-size:20px !important;padding:12px 10px !important;border:2.5px solid #fecaca !important;border-radius:14px !important;letter-spacing:-0.3px;box-shadow:0 5px 0 #8A2018,0 0 0 4px rgba(220,38,38,0.16)}
   .fs-box{padding:7px 9px !important}
+  .fv-tip{display:none !important}            /* 바로 아래 재생 버튼과 겹치는 안내 */
+  .home-row-pair{flex-wrap:nowrap !important;gap:6px !important}
+  .home-row-pair > *{flex:1 1 0;min-width:0}
+  .home-row-pair .okay-mini{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .home-guide .g-red{background:rgba(220,38,38,0.16) !important;border-left-width:5px !important;box-shadow:inset 0 0 0 1.5px rgba(220,38,38,0.35)}
 }
 </style>
@@ -1061,7 +1065,7 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
           <span style="display:inline-flex; align-items:center; gap:6px; background:rgba(251,191,36,0.18); border:1px solid #fbbf24; color:#fde047; font-size:14px; font-weight:900; padding:4px 12px; border-radius:50px;">
             🎬 국민 AI 신호등 가족 소개 영상 (립싱크 브리핑)
           </span>
-          <span style="font-size:13px; font-weight:700; color:#bfdbfe;">🔊 아래 버튼 누르면 바로 재생</span>
+          <span class="fv-tip" style="font-size:13px; font-weight:700; color:#bfdbfe;">🔊 아래 버튼 누르면 바로 재생</span>
         </div>
         <div style="border-radius:14px; overflow:hidden; background:#020617; border:1.5px solid rgba(255,255,255,0.2);">
           <video id="familyIntroVideo" src="./가족영상.mp4" controls playsinline preload="metadata" style="width:100%; display:block; max-height:420px; background:#000;"></video>
@@ -1882,7 +1886,7 @@ function home(){
       <b>가입 안 해도, 지금 바로 무료</b>
       <div class="fp-row"><span>가입 없이 바로</span><span>카드 등록 없음</span><span>몰래 결제 절대 없음</span></div>
     </div>
-    <div class="home-row">
+    <div class="home-row home-row-pair">
       <button class="okay-mini ${getChecks().includes(today()) ? "done" : ""}" type="button" id="okHome">${getChecks().includes(today()) ? "✓ 오늘 안부 보냈어요" : "오늘 안부: 나 괜찮아요"}</button>
       <button class="act plain" type="button" id="wxHome">오늘 날씨</button>
     </div>
