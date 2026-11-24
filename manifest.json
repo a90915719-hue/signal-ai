@@ -1,0 +1,39 @@
+{
+  "id": "./",
+  "name": "나만의 AI · 대한민국 국민 신호등",
+  "short_name": "국민신호등 AI",
+  "description": "손가락 하나만 누르면 말벗, 음성 기억장, 생활 도우미, 긴급 전화까지 1초 해결!",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1329",
+  "theme_color": "#1e40af",
+  "lang": "ko",
+  "icons": [
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
