@@ -723,6 +723,65 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   box-shadow: 0 4px 10px rgba(37,99,235,0.3);
 }
 
+/* ==========================================================
+   📱 핸드폰(390px 안팎) 화면에 맞춘 컴팩트 정리
+   글씨 크기는 읽기 편하게 두고, 과하게 큰 여백·박스만 줄임
+   ========================================================== */
+@media (max-width:480px){
+  body{padding-inline:10px;padding-block:10px 28px;font-size:18px}
+  .wrap{gap:14px}
+  .screen{gap:14px}
+  h1{font-size:30px}
+  .hint{font-size:15px}
+  .lead{font-size:20px}
+
+  /* 헤더 */
+  header{padding:14px 14px !important;border-radius:18px !important;margin-bottom:12px !important}
+
+  /* 신호등 열 */
+  .signal-col{gap:10px;padding-bottom:4px}
+  .signal-name{font-size:15px}
+  .signal-text{font-size:17px;min-height:0}
+  .sos-btn{font-size:19px;padding:12px 10px}
+  .sos-hint{font-size:13px;line-height:1.3}
+  .fs-box{padding:10px 12px !important}
+
+  /* 첫 화면 파란 동그라미 */
+  .big-start{width:min(180px,48vw);font-size:34px;margin-block:8px;box-shadow:0 0 0 9px color-mix(in srgb,var(--blue) 18%,transparent)}
+
+  /* 영상 카드 + 안내 */
+  .video-card{padding:11px !important;border-radius:18px !important}
+  .video-card .guide-red{margin-top:8px;padding:9px 10px;font-size:13.5px;gap:8px}
+  .guide-red .ic{font-size:19px}
+  #playFamilyVideoBtn{padding:12px 10px !important;font-size:17px !important;margin-top:9px !important}
+  #fvGuide,#fvFree,#fvPlan,#fvSpace{padding:9px 6px !important;font-size:14px !important}
+  .video-card > div:last-child{gap:7px !important;margin-top:8px !important}
+
+  /* 3초 사용 설명서 카드 */
+  .home-guide{padding:13px 12px !important;border-radius:16px !important;margin-bottom:12px !important}
+  .home-guide div[style*="font-size:16px"]{gap:7px !important;font-size:15px !important;line-height:1.45 !important}
+
+  /* 무료 안내 · 버튼 모음 */
+  .free-promise{padding:12px 12px;border-radius:16px;border-width:3px}
+  .free-promise b{font-size:22px}
+  .free-promise .fp-row span{font-size:14px;padding:5px 10px}
+  .home-row{gap:8px}
+  .home-row .act{font-size:17px;padding:11px 14px}
+  .okay-mini{font-size:17px;padding:11px 16px}
+  .intro-link{font-size:18px;padding:11px 16px}
+
+  /* 나만의 기억장 · 카톡 · 말로 기능 찾기 큰 버튼 */
+  #btnHomeMySpace{padding:14px 12px !important;font-size:18px !important;border-radius:16px !important;margin-block:10px !important}
+  #btnHomeKakao{padding:13px 14px !important;font-size:17px !important;border-radius:16px !important;margin-block:8px !important}
+  #btnHomeVoice{padding:13px 12px !important;border-radius:16px !important;margin-top:8px !important}
+  #btnHomeVoice span:nth-child(2){font-size:20px !important}
+
+  /* 하단 범례 · 하단 바 */
+  .legend{font-size:14px;gap:8px 14px;margin-top:14px}
+  #pwaBottomBar button span:nth-child(2){font-size:11px}
+  .upgrade{padding:12px}
+  .up-card{padding:18px;border-radius:20px}
+}
 </style>
 </head>
 <body>
@@ -1550,7 +1609,7 @@ function home(){
   clearTimeout(timer); stopTour(); nextAction = null; signal("green", "파란 동그라미를 누르세요");
   app.innerHTML = `<section class="screen">
     <!-- 🎬 국민 AI 신호등 가족 소개 영상 (립싱크 브리핑) -->
-    <div style="background:linear-gradient(155deg, #0b1329 0%, #172554 100%); border:2.5px solid #fbbf24; border-radius:22px; padding:16px; box-shadow:0 12px 30px rgba(11,19,41,0.3); color:#ffffff;">
+    <div class="video-card" style="background:linear-gradient(155deg, #0b1329 0%, #172554 100%); border:2.5px solid #fbbf24; border-radius:22px; padding:16px; box-shadow:0 12px 30px rgba(11,19,41,0.3); color:#ffffff;">
       <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
         <span style="display:inline-flex; align-items:center; gap:6px; background:rgba(251,191,36,0.18); border:1px solid #fbbf24; color:#fde047; font-size:14px; font-weight:900; padding:4px 12px; border-radius:50px;">
           🎬 국민 AI 신호등 가족 소개 영상 (립싱크 브리핑)
@@ -1645,7 +1704,7 @@ function home(){
     <button class="big-start" id="go" type="button">누르기</button>
     <p class="hint" style="font-size:18px; font-weight:800; color:var(--blue); margin-top:8px;">👉 파란 동그라미를 누르면 "무엇을 찾으세요?" 하고 소리로 친절히 안내합니다!</p>
 
-    <div style="background:var(--surface); border:2.5px solid var(--blue); border-radius:20px; padding:18px 16px; margin-bottom:18px; box-shadow:0 6px 20px rgba(37,99,235,0.15); text-align:left;">
+    <div class="home-guide" style="background:var(--surface); border:2.5px solid var(--blue); border-radius:20px; padding:18px 16px; margin-bottom:18px; box-shadow:0 6px 20px rgba(37,99,235,0.15); text-align:left;">
       <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
         <span style="font-size:22px;">💡</span>
         <span style="font-size:18px; font-weight:900; color:var(--blue);">처음 오셨나요? 3초 사용 설명서</span>
@@ -1691,9 +1750,16 @@ function home(){
       <button class="act plain" type="button" id="planBtn">☕ 커피 한 잔 요금제 · 내 사용량</button>
     </div>
 
-    <button class="act" type="button" onclick="shareKakaoApp()" style="background:#fee500; color:#191919; border:none; border-radius:18px; padding:16px 20px; font-size:19px; font-weight:900; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 4px 15px rgba(254,229,0,0.4); width:100%; margin-block:10px; cursor:pointer;">
+    <button class="act" id="btnHomeKakao" type="button" onclick="shareKakaoApp()" style="background:#fee500; color:#191919; border:none; border-radius:18px; padding:16px 20px; font-size:19px; font-weight:900; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 4px 15px rgba(254,229,0,0.4); width:100%; margin-block:10px; cursor:pointer;">
       <span style="font-size:24px;">💬</span>
       <span>가족·친구에게 카카오톡으로 선물/공유하기</span>
+    </button>
+
+    <!-- 🎤 말로 기능 찾기 (누르면 바로 듣기 시작) -->
+    <button id="btnHomeVoice" type="button" onclick="homeVoiceSearch()" style="width:100%; margin-top:12px; background:linear-gradient(135deg,#0f766e,#0d9488); border:2.5px solid #5eead4; color:#fff; border-radius:18px; padding:16px 14px; display:flex; flex-direction:column; align-items:center; gap:2px; box-shadow:0 6px 18px rgba(13,148,136,0.35); cursor:pointer; font-family:var(--body);">
+      <span style="font-size:30px; line-height:1;">🎤</span>
+      <span style="font-size:21px; font-weight:900; letter-spacing:-0.5px;">말로 기능 찾기</span>
+      <span style="font-size:14px; font-weight:800; color:#ccfbf1;">누르고 말하면 바로 열려요</span>
     </button>
   </section>`;
 
@@ -2008,11 +2074,12 @@ function processSmartVoiceSearch(q) {
   }
 }
 
-function sections(){
+function sections(autoVoice){
   stopTour(); nextAction = null; signal("green", "말씀하시거나 버튼을 누르세요");
 
   // 파란 버튼 누르고 들어오자마자 음성으로 친절하게 환영 안내!
-  setTimeout(() => {
+  // (홈의 '말로 기능 찾기'로 들어온 때는 바로 마이크를 켜야 하므로 안내 음성을 생략)
+  if(autoVoice !== true) setTimeout(() => {
     speakGuide("무엇을 찾으세요? 지역이나 원하시는 것을 편하게 말씀해 주세요.");
   }, 350);
 
@@ -2142,6 +2209,17 @@ function sections(){
       if (q) processSmartVoiceSearch(q);
     }
   };
+
+  // 홈의 '말로 기능 찾기' 버튼으로 들어온 경우: 화면이 그려진 직후 바로 마이크를 켜요
+  if(autoVoice === true){
+    try{ startNavVoice(); }catch(e){}
+  }
+}
+
+/* ---------- 홈: 말로 기능 찾기 (누르면 바로 듣기 시작) ---------- */
+function homeVoiceSearch(){
+  clearTimeout(timer);
+  sections(true);
 }
 
 function makeMenu(){
@@ -5981,8 +6059,8 @@ function createStandaloneSample(){
 // 무료 체험은 하루 3번 (2026-11-24 지시). 공공·안전 기능은 이 숫자와 상관없이 평생 무료예요.
 const PLANS = {
   free:   {name:"무료",       price:0,    light:3,  draw:2,  video:0, tag:"맛보기"},
-  coffee: {name:"커피 한 잔", price:3900, light:20, draw:15, video:2, tag:"제일 인기"},
-  rich:   {name:"든든",       price:9900, light:50, draw:50, video:6, tag:"많이 쓰는 분"}
+  coffee: {name:"커피 한 잔", price:4900, light:10, draw:5,  video:0, tag:"제일 인기"},
+  rich:   {name:"든든",       price:9900, light:30, draw:15, video:2, tag:"많이 쓰는 분"}
 };
 const ADDONS = {
   draw:  {name:"그림 10장 더",  price:1500, add:10},
@@ -6028,7 +6106,7 @@ function showUpgrade(kind){
   const T = {
     light: ["오늘 AI 쓰는 횟수를 다 썼어요", `${p.name} 요금제는 하루 ${p.light}번이에요. 내일 아침이면 다시 채워져요.`],
     draw:  ["이번 달 그림을 다 그렸어요", `${p.name} 요금제는 한 달에 ${limitOf(q,"draw")}장이에요. 다음 달 1일에 다시 채워져요.`],
-    video: [p.video ? "이번 달 영상을 다 만들었어요" : "영상 만들기는 유료 요금제에서 돼요", p.video ? `${p.name} 요금제는 한 달에 ${limitOf(q,"video")}편이에요. 다음 달 1일에 다시 채워져요.` : "커피 한 잔 요금제부터 한 달에 영상을 만들 수 있어요."],
+    video: [p.video ? "이번 달 영상을 다 만들었어요" : "영상 만들기는 든든 요금제에서 돼요", p.video ? `${p.name} 요금제는 한 달에 ${limitOf(q,"video")}편이에요. 다음 달 1일에 다시 채워져요.` : "든든 요금제부터 한 달에 2편까지 영상을 만들 수 있어요."],
     fast:  ["잠깐 쉬었다가 눌러주세요", "1분 동안 너무 많이 눌렀어요. 1분만 기다리면 다시 돼요."]
   }[kind];
   signal("yellow", T[0]);
@@ -6287,7 +6365,7 @@ function plans(){
   });
   app.querySelectorAll("[data-addon]").forEach(b=>b.onclick=()=>pay("addon:"+b.dataset.addon));
 }
-const HYODO_MSG = "얘야, 엄마(아빠)가 요즘 'AI 신호등'으로 그림도 그리고 영상도 만든단다. 한 달 커피 한 잔 값(3,900원)인데 대신 결제 좀 해줄 수 있겠니? 고마워!";
+const HYODO_MSG = "얘야, 엄마(아빠)가 요즘 'AI 신호등'으로 그림도 그리고 궁금한 것도 다 물어보고 산단다. 한 달 커피 한 잔 값(4,900원)인데 대신 결제 좀 해줄 수 있겠니? 고마워!";
 
 function pay(what){
   stopTour(); nextAction = null;
