@@ -797,7 +797,8 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   /* 하단 범례 · 하단 바 */
   .legend{font-size:14px;gap:8px 14px;margin-top:14px}
   #pwaBottomBar button span:nth-child(2){font-size:11px}
-  #pwaInstallBanner{max-width:280px !important}
+  #pwaInstallBanner{max-width:344px !important}
+  #pwaInstallBanner .pwa-sub{display:none}
   #pwaInstallBanner .pwa-full > div:last-child button:first-child{font-size:14px !important;padding:9px 12px !important}
   #pwaMiniBtn{font-size:14px !important}
   .upgrade{padding:12px}
@@ -7041,7 +7042,7 @@ document.addEventListener('click', function(e) {
           <div style="font-size:16px; font-weight:900; color:#fde047; letter-spacing:-0.3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
             내 폰 바탕화면에 앱으로 설치
           </div>
-          <div style="font-size:12px; font-weight:700; color:#dbeafe; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+          <div class="pwa-sub" style="font-size:12px; font-weight:700; color:#dbeafe; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
             카톡 찾을 필요 없이 터치 1초 실행!
           </div>
         </div>
@@ -7157,7 +7158,7 @@ document.addEventListener('click', function(e) {
       b.style.borderRadius = '20px';
       syncBannerSpace();
       clearTimeout(pwaBannerTimer);
-      pwaBannerTimer = setTimeout(collapsePwaBanner, 12000);
+      pwaBannerTimer = setTimeout(collapsePwaBanner, 8000);
     }
 
     function closePwaBanner() {
@@ -7178,7 +7179,7 @@ document.addEventListener('click', function(e) {
       } else {
         syncBannerSpace();
         clearTimeout(pwaBannerTimer);
-        pwaBannerTimer = setTimeout(collapsePwaBanner, 12000);
+        pwaBannerTimer = setTimeout(collapsePwaBanner, 8000);
       }
     });
 
