@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>390px 검사용 (임시)</title>
+<style>
+  body{margin:0;background:#111;color:#fff;font:14px/1.4 -apple-system,sans-serif}
+  .row{display:flex;gap:16px;align-items:flex-start;padding:12px}
+  .box{border:1px solid #444}
+  iframe{border:0;display:block;background:#fff}
+  #out{padding:10px 14px;font:13px/1.6 monospace;white-space:pre-wrap;color:#7ee787}
+  h3{margin:8px 0;font-size:13px;color:#ddd}
+</style>
+</head>
+<body>
+<div id="out">측정 중…</div>
+<div class="row">
+  <div>
+    <h3>① 첫 화면 (390×844)</h3>
+    <div class="box"><iframe id="f1" width="390" height="844" src="index.html"></iframe></div>
+  </div>
+  <div>
+    <h3>② 홈 전체 (390×2400)</h3>
+    <div class="box"><iframe id="f2" width="390" height="2400" src="index.html"></iframe></div>
+  </div>
+</div>
+<script>
+function measure(f){
+  const d=f.contentDocument, w=f.contentWindow;
+  const R=el=>{ if(!el) return null; const r=el.getBoundingClientRect(); return {x:Math.round(r.x),y:Math.round(r.y),w:Math.round(r.width),h:Math.round(r.height)}; };
+  const v=d.getElementById('familyIntroVideo');
+  return {
+    innerWidth: w.innerWidth,
+    docHeight: Math.round(d.documentElement.scrollHeight),
+    header: R(d.querySelector('header')),
+    videoCard: R(d.querySelector('.video-card')),
+    video: R(v),
+    videoNat: v ? (v.videoWidth+'x'+v.videoHeight) : null,
+    sosBtn: R(d.getElementById('sosBtn')),
+    firstScreenBottom: Math.round(w.innerHeight)
+  };
+}
+function run(){
+  try{
+    const a=measure(document.getElementById('f1'));
+    const b=measure(document.getElementById('f2'));
+    document.getElementById('out').textContent='① '+JSON.stringify(a,null,1)+'\n\n② '+JSON.stringify(b,null,1);
+    document.title='390check '+a.innerWidth+' header='+a.header.h+' video='+a.video.w+'x'+a.video.h;
+  }catch(e){
+    document.getElementById('out').textContent='ERR '+e.message;
+    document.title='ERR '+e.message;
+  }
+}
+let n=0;
+const t=setInterval(()=>{ n++; run(); if(n>12) clearInterval(t); },600);
+</script>
+</body>
+</html>
