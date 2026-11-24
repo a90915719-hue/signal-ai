@@ -395,10 +395,10 @@ a.act{text-decoration:none;text-align:center;display:inline-block}
 .fx-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:24px;font-weight:700}
 .fx-list li{background:var(--bg);border:3px solid var(--line);border-radius:12px;padding:10px 18px}
 .fx-list em{font-style:normal;font-size:18px;color:var(--blue);margin-left:8px}
-.sos-btn{width:100%;border:0;border-radius:16px;padding:14px 18px;background:var(--stop);color:#fff;font-family:var(--display);font-size:26px;cursor:pointer;box-shadow:0 5px 0 #8A2018}
+.sos-btn{width:100%;border:0;border-radius:16px;padding:14px 12px;background:var(--stop);color:#fff;font-family:var(--display);font-size:21px;line-height:1.25;cursor:pointer;box-shadow:0 5px 0 #8A2018}
 .sos-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #8A2018}
 @media (max-width:760px){.sos-btn{width:auto;flex:1 1 100%}}
-.fx-sos{width:auto;padding:16px 30px;font-size:30px}
+.fx-sos{width:auto;padding:14px 20px;font-size:22px}
 .sos h1{color:var(--stop)}
 .sos-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
 .sos-call{display:flex;flex-direction:column;align-items:center;gap:8px;border-radius:22px;padding:24px 18px;color:#fff;text-decoration:none;text-align:center}
@@ -458,6 +458,24 @@ a.act{text-decoration:none;text-align:center;display:inline-block}
 .payb.tosspay{background:#0064FF;color:#fff}
 .payb.phonepay{background:var(--surface);color:var(--fg);border:3px solid var(--line)}
 .payb.cardpay{background:var(--surface);color:var(--fg);border:3px solid var(--line)}
+.payb[disabled]{opacity:.5;filter:grayscale(.45);cursor:not-allowed}
+.payb .soon{font-size:13px;font-weight:900;background:rgba(0,0,0,.28);padding:2px 8px;border-radius:999px}
+/* 케이뱅크 계좌이체 안내 */
+.keb-card{background:linear-gradient(155deg,#0b1329 0%,#123a6b 100%);border:3px solid #fbbf24;border-radius:20px;padding:18px 16px;color:#fff;display:flex;flex-direction:column;gap:10px;text-align:left;box-shadow:0 10px 24px rgba(11,19,41,.3)}
+.keb-head{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:900;color:#fde047;line-height:1.3}
+.keb-logo{display:inline-flex;width:34px;height:34px;border-radius:10px;background:#ffcc00;color:#0b1329;align-items:center;justify-content:center;font-weight:900;font-size:19px;flex-shrink:0}
+.keb-row{display:flex;justify-content:space-between;align-items:center;gap:10px;background:rgba(255,255,255,.1);border-radius:10px;padding:10px 13px;font-size:18px}
+.keb-row span{color:#bfdbfe;font-weight:700}
+.keb-row b{font-weight:900}
+.keb-num{font-size:23px;letter-spacing:.4px;font-variant-numeric:tabular-nums;color:#fef08a}
+.keb-amt{font-size:23px;color:#86efac;font-variant-numeric:tabular-nums}
+.keb-card .act{font-size:19px;padding:14px;border-radius:14px;width:100%}
+.keb-note{margin:0;font-size:17px;font-weight:800;color:#fff;line-height:1.5;background:rgba(251,191,36,.18);border-radius:10px;padding:10px 12px}
+.keb-sub{margin:0;font-size:14px;color:#bfdbfe;font-weight:700;line-height:1.45}
+.sos-hint{margin:0;font-size:14px;font-weight:800;color:var(--stop);text-align:center;line-height:1.35;max-width:250px}
+.guide-red{display:flex;align-items:center;gap:10px;background:rgba(220,38,38,.92);border:2px solid #fca5a5;border-radius:14px;padding:11px 14px;margin-top:10px;font-size:15px;font-weight:900;color:#fff;line-height:1.4;text-align:left}
+.guide-red .ic{font-size:22px;flex-shrink:0}
+@media (max-width:760px){.guide-red{font-size:14px}}
 .upgrade{position:fixed;inset:0;z-index:60;background:rgba(10,13,22,.6);display:grid;place-items:center;padding:20px}
 .up-card{background:var(--surface);color:var(--fg);border-radius:24px;padding:24px;max-width:460px;width:100%;display:flex;flex-direction:column;gap:12px;text-align:center;align-items:center;border:5px solid var(--wait)}
 .up-card h2{margin:0;font-family:var(--display);font-weight:400;font-size:30px;line-height:1.2}
@@ -841,7 +859,8 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
       <div class="lamp green" id="L-green"></div>
     </div>
     <div class="signal-text" id="signalText">말씀하세요</div>
-    <button class="sos-btn" type="button" id="sosBtn">긴급 전화</button>
+    <button class="sos-btn" type="button" id="sosBtn" aria-label="긴급 버튼 119 또는 112">🚨 긴급 버튼 (119·112)</button>
+    <p class="sos-hint">위급할 때는 신호등 밑에 빨간 긴급 버튼을 누르시면 됩니다</p>
     <div class="fs-box" role="group" aria-label="글씨 크기">
       <div class="fs-head"><span>글씨 크기</span>
         <button class="mag-btn" type="button" id="magBtn" aria-pressed="false" title="돋보기: 누른 글자를 크게 보여줘요">
@@ -1541,6 +1560,7 @@ function home(){
       <div style="border-radius:14px; overflow:hidden; background:#020617; border:1.5px solid rgba(255,255,255,0.2);">
         <video id="familyIntroVideo" src="./가족영상.mp4" controls playsinline preload="metadata" style="width:100%; display:block; max-height:420px; background:#000;"></video>
       </div>
+      <div class="guide-red"><span class="ic">🚨</span><span>위급할 때는 <b>신호등 밑에 빨간 긴급 버튼</b>을 누르시면 됩니다</span></div>
       <div id="familyVideoMsg" style="display:none; margin-top:8px; padding:10px 12px; background:rgba(239,68,68,0.18); border:1px solid #f87171; border-radius:10px; font-size:14px; color:#fecaca; font-weight:700;">
         ⚠️ 영상 파일(가족영상.mp4)을 불러오지 못했습니다. 같은 폴더에 가족영상.mp4가 있는지 확인해 주세요.
       </div>
@@ -2165,6 +2185,7 @@ function emergency(){
     <button class="back" type="button" id="b">◀ 처음으로</button>
     <div class="step">긴급할 때</div>
     <h1>급하면 바로 누르세요</h1>
+    <div class="guide-red" style="margin:0 0 14px"><span class="ic">🚨</span><span>위급할 때는 <b>신호등 밑에 빨간 긴급 버튼</b>을 누르시면 됩니다</span></div>
     <div class="sos-grid">
       <a class="sos-call red" href="tel:119"><span class="num">119</span><span class="what">불났을 때 · 아플 때 · 쓰러졌을 때</span><span class="tap">눌러서 전화 걸기</span></a>
       <a class="sos-call blue" href="tel:112"><span class="num">112</span><span class="what">도둑 · 위험할 때 · 사기 당했을 때</span><span class="tap">눌러서 전화 걸기</span></a>
@@ -5356,7 +5377,7 @@ const FEATURES = [
    points:["당근, 중고나라, 번개장터 동네 중고거래도 바로","쿠팡, 롯데ON, SSG 같은 쇼핑몰을 버튼 하나로","주소만 적으면 근처 백화점, 마트, 시장을 지도로","장보기 목록은 AI가 정리해줘요"],
    go:()=>culture()},
   {ico:"긴", title:"긴급할 때 · 사기 조심", promise:"급할 때 빨간 버튼 하나, 사기 문자도 AI가 봐줘요",
-   frames:[{cap:"어느 화면에서든 빨간 '긴급 전화' 버튼", html:`<div class="fx"><div class="sos-btn fx-sos">긴급 전화</div><div class="fx-text">언제나 신호등 바로 밑에 있어요</div></div>`, sig:"red"},
+   frames:[{cap:"위급할 때는 신호등 밑에 빨간 긴급 버튼을 누르시면 됩니다", html:`<div class="fx"><div class="sos-btn fx-sos">🚨 긴급 버튼 (119·112)</div><div class="fx-text">어느 화면에서든 신호등 바로 밑에 있어요</div></div>`, sig:"red"},
            {cap:"119, 112를 크게 누르고, 할 말까지 알려줘요", html:`<div class="fx"><div class="fx-bubble">"여기는 영통동 ○○아파트입니다. 빨리 와주세요"</div><div class="fx-text">주소를 미리 적어두면 당황해도 괜찮아요</div></div>`, sig:"red"},
            {cap:"이상한 문자, AI가 사기인지 봐줘요", html:`<div class="fx"><div class="verdict danger fx-verdict"><div class="v-level">위험</div><p>링크를 누르지 마세요</p></div></div>`, sig:"red"}],
    points:["119, 112를 아주 크게, 버튼 하나로","화면이 꺼져 있어도 옆 버튼 5번! 긴급 SOS 켜는 법을 그림으로","여성긴급전화 1366, 112 문자 신고까지 한곳에","보이스피싱 피해 1332, 스미싱 118도 바로","의심 문자를 붙여넣으면 AI가 사기인지 알려줘요"],
@@ -5957,8 +5978,9 @@ function createStandaloneSample(){
 }
 /* ---------- 요금제 · 사용 한도 (남용 막기) ---------- */
 // light: 하루 횟수 / draw, video: 한 달 횟수. 숫자는 AI 비용을 계산해 정한 처음 값이에요.
+// 무료 체험은 하루 3번 (2026-11-24 지시). 공공·안전 기능은 이 숫자와 상관없이 평생 무료예요.
 const PLANS = {
-  free:   {name:"무료",       price:0,    light:5,  draw:2,  video:0, tag:"맛보기"},
+  free:   {name:"무료",       price:0,    light:3,  draw:2,  video:0, tag:"맛보기"},
   coffee: {name:"커피 한 잔", price:3900, light:20, draw:15, video:2, tag:"제일 인기"},
   rich:   {name:"든든",       price:9900, light:50, draw:50, video:6, tag:"많이 쓰는 분"}
 };
@@ -6246,7 +6268,7 @@ function plans(){
     </div>
 
     <div class="note-box"><b>공정하게 쓰기:</b> 기계로 자동 반복해서 쓰거나, 남에게 되파는 건 막혀요. 1분에 너무 많이 누르면 잠깐 쉬게 돼요. 가게나 회사에서 많이 쓰실 분은 따로 문의해 주세요.</div>
-    <p class="hint left">미리보기라서 실제 결제는 되지 않아요. 언제든 해지할 수 있게 만들 거예요.</p>
+    <p class="hint left">결제는 <b>케이뱅크 계좌이체</b>로 받아요. 간편결제는 준비 중이고, 해지는 언제든 버튼 하나로 돼요.</p>
   </section>`;
   const $ = id=>document.getElementById(id);
   $("b").onclick = home;
@@ -6277,33 +6299,44 @@ function pay(what){
     <div class="step">결제하기</div>
     <h1>${esc(item.name)}</h1>
     <div class="pay-sum"><b>${item.price.toLocaleString()}원</b><span>${item.sub}</span></div>
-    <h2 class="group">무엇으로 낼까요?</h2>
-    <div class="pay-grid">
-      <button class="payb kakaopay" type="button">카카오페이</button>
-      <button class="payb naverpay" type="button">네이버페이</button>
-      <button class="payb tosspay" type="button">토스페이</button>
-      <button class="payb phonepay" type="button">휴대폰 결제<small>통신비에 같이 나가요</small></button>
-      <button class="payb cardpay" type="button">신용 · 체크카드</button>
+    <div class="keb-card">
+      <div class="keb-head"><span class="keb-logo">K</span><span>케이뱅크 계좌이체로 보내주세요</span></div>
+      <div class="keb-row"><span>은행</span><b>케이뱅크</b></div>
+      <div class="keb-row"><span>계좌번호</span><b class="keb-num" id="kebNum">100-242-592346</b></div>
+      <div class="keb-row"><span>예금주</span><b>양철배</b></div>
+      <div class="keb-row"><span>보낼 금액</span><b class="keb-amt">${item.price.toLocaleString()}원</b></div>
+      <button class="act primary copy" type="button" data-n="100-242-592346" id="kebCopy">📋 계좌번호 복사하기</button>
+      <p class="keb-note">케이뱅크 계좌로 보내주시면 확인 후 바로 열어드려요.</p>
+      <p class="keb-sub">자녀분이 대신 보내실 때는 입금자 이름에 자녀분 성함을 적어주시면 확인이 빨라요.</p>
     </div>
-    <p class="hint left">미리보기라서 눌러도 실제로 돈이 나가지 않아요.</p>
+    <h2 class="group">간편결제 (준비 중)</h2>
+    <p class="hint left" style="margin-top:-4px">아래 간편결제는 아직 준비 중이에요. 지금은 위의 <b>케이뱅크 계좌이체</b>로만 받고 있어요.</p>
+    <div class="pay-grid">
+      <button class="payb kakaopay" type="button" disabled>카카오페이<span class="soon">준비 중</span></button>
+      <button class="payb naverpay" type="button" disabled>네이버페이<span class="soon">준비 중</span></button>
+      <button class="payb tosspay" type="button" disabled>토스페이<span class="soon">준비 중</span></button>
+      <button class="payb phonepay" type="button" disabled>휴대폰 결제<small>통신비에 같이 나가요</small><span class="soon">준비 중</span></button>
+      <button class="payb cardpay" type="button" disabled>신용 · 체크카드<span class="soon">준비 중</span></button>
+    </div>
   </section>`;
   document.getElementById("b").onclick = plans;
-  app.querySelectorAll(".payb").forEach(b=>b.onclick=()=>{
-    const q = qState();
-    if(type === "plan") q.plan = key;
-    else if(key === "draw") q.extraDraw += ADDONS.draw.add;
-    else q.extraVideo += ADDONS.video.add;
-    saveQ(q);
-    signal("green", "결제 완료!");
-    app.innerHTML = `<section class="screen">
-      <h1>다 됐어요! 고맙습니다</h1>
-      <div class="pay-sum"><b>${esc(item.name)}</b><span>${b.childNodes[0].textContent}(으)로 ${item.price.toLocaleString()}원 · 미리보기라 실제로 돈이 나가지 않았어요</span></div>
-      <button class="next-btn" type="button" id="g1">파란 버튼으로 가기 ▶</button>
-      <button class="act plain" type="button" id="g2">내 사용량 보기</button>
-    </section>`;
-    document.getElementById("g1").onclick = home;
-    document.getElementById("g2").onclick = plans;
-  });
+  const kebCopy = document.getElementById("kebCopy");
+  if(kebCopy) kebCopy.onclick = async () => {
+    const num = "100-242-592346";
+    let ok = false;
+    try{ await navigator.clipboard.writeText(num); ok = true; }
+    catch(e){
+      try{
+        const ta = document.createElement("textarea");
+        ta.value = num; ta.setAttribute("readonly", "");
+        ta.style.position = "fixed"; ta.style.top = "-1000px";
+        document.body.append(ta); ta.select();
+        ok = document.execCommand("copy"); ta.remove();
+      }catch(e2){ ok = false; }
+    }
+    kebCopy.textContent = ok ? "✅ 계좌번호 복사됐어요" : "계좌번호: 100-242-592346";
+    signal(ok ? "green" : "yellow", ok ? "계좌번호를 복사했어요" : "계좌번호를 손으로 적어주세요");
+  };
 }
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 
@@ -6902,25 +6935,30 @@ document.addEventListener('click', function(e) {
 
   <!-- 📲 [원클릭 스마트폰 앱 설치 플로팅 바 & 안내 시스템] -->
   <div id="pwaInstallBanner" style="position:fixed; bottom:76px; left:50%; transform:translateX(-50%); width:92%; max-width:480px; background:linear-gradient(135deg, #0b1329 0%, #1e3a8a 100%); border:2.5px solid #fbbf24; border-radius:20px; padding:14px 18px; box-shadow:0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(251,191,36,0.5); z-index:99990; display:flex; align-items:center; justify-content:space-between; gap:12px;">
-    <div style="display:flex; align-items:center; gap:12px; flex:1; min-width:0;">
-      <div style="font-size:32px; flex-shrink:0;">📲</div>
-      <div style="min-width:0;">
-        <div style="font-size:16px; font-weight:900; color:#fde047; letter-spacing:-0.3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-          내 폰 바탕화면에 앱으로 설치
-        </div>
-        <div style="font-size:12px; font-weight:700; color:#dbeafe; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-          카톡 찾을 필요 없이 터치 1초 실행!
+    <div class="pwa-full" style="display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; min-width:0;">
+      <div style="display:flex; align-items:center; gap:12px; flex:1; min-width:0;">
+        <div style="font-size:32px; flex-shrink:0;">📲</div>
+        <div style="min-width:0;">
+          <div style="font-size:16px; font-weight:900; color:#fde047; letter-spacing:-0.3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            내 폰 바탕화면에 앱으로 설치
+          </div>
+          <div style="font-size:12px; font-weight:700; color:#dbeafe; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+            카톡 찾을 필요 없이 터치 1초 실행!
+          </div>
         </div>
       </div>
+      <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
+        <button type="button" onclick="triggerPwaInstall()" style="background:linear-gradient(135deg, #f59e0b, #d97706); color:#000; font-size:15px; font-weight:900; padding:10px 16px; border-radius:12px; border:1px solid #fef08a; cursor:pointer; box-shadow:0 3px 10px rgba(245,158,11,0.4); white-space:nowrap;">
+          1초 설치
+        </button>
+        <button type="button" onclick="closePwaBanner()" aria-label="설치 안내 닫기" style="background:transparent; border:none; color:#94a3b8; font-size:22px; cursor:pointer; padding:0 4px; line-height:1;">
+          &times;
+        </button>
+      </div>
     </div>
-    <div style="display:flex; align-items:center; gap:8px; flex-shrink:0;">
-      <button type="button" onclick="triggerPwaInstall()" style="background:linear-gradient(135deg, #f59e0b, #d97706); color:#000; font-size:15px; font-weight:900; padding:10px 16px; border-radius:12px; border:1px solid #fef08a; cursor:pointer; box-shadow:0 3px 10px rgba(245,158,11,0.4); white-space:nowrap;">
-        1초 설치
-      </button>
-      <button type="button" onclick="closePwaBanner()" style="background:transparent; border:none; color:#94a3b8; font-size:22px; cursor:pointer; padding:0 4px; line-height:1;">
-        &times;
-      </button>
-    </div>
+    <button type="button" id="pwaMiniBtn" onclick="expandPwaBanner()" aria-label="앱 설치 안내 펼치기" style="display:none; background:transparent; border:none; color:#fde047; font-size:15px; font-weight:900; cursor:pointer; align-items:center; gap:6px; padding:0; white-space:nowrap;">
+      📲 앱 설치
+    </button>
   </div>
 
   <!-- 📱 스마트폰 하단 고정 원터치 앱 메뉴바 (시니어/초보자 극강 편의) -->
@@ -6948,12 +6986,12 @@ document.addEventListener('click', function(e) {
   </nav>
 
   <style>
-    @keyframes bounceBanner {
-      0%, 100% { transform: translate(-50%, 0); }
-      50% { transform: translate(-50%, -6px); }
-    }
     body {
       padding-bottom: 80px !important; /* 하단 네비게이션 바 공간 확보 */
+    }
+    /* 설치 안내 바가 펼쳐져 있을 때는 내용이 바 뒤로 숨지 않도록 여백을 더 준다 */
+    body.banner-open {
+      padding-bottom: 196px !important;
     }
   </style>
 
@@ -6969,15 +7007,66 @@ document.addEventListener('click', function(e) {
       e.preventDefault();
       deferredInstallPrompt = e;
       const banner = document.getElementById('pwaInstallBanner');
-      if (banner) banner.style.display = 'flex';
+      if (banner) { banner.style.display = 'flex'; expandPwaBanner(); }
     });
 
+    /* ---------- 설치 안내 바: 펼침 / 작은 단추로 접기 ----------
+       펼친 바가 화면 가운데(파란 '누르기' 단추 등)를 오래 가리지 않도록
+       12초 뒤에는 오른쪽 아래 "📲 앱 설치" 작은 단추로 접고,
+       접힌 단추나 x 로 언제든 닫을 수 있게 한다. */
+    let pwaBannerTimer = null;
 
+    function syncBannerSpace() {
+      const b = document.getElementById('pwaInstallBanner');
+      const open = !!b && b.style.display !== 'none' && b.dataset.mini !== '1';
+      document.body.classList.toggle('banner-open', open);
+    }
+
+    function collapsePwaBanner() {
+      clearTimeout(pwaBannerTimer);
+      const b = document.getElementById('pwaInstallBanner');
+      if (!b || b.style.display === 'none' || b.dataset.mini === '1') return;
+      const full = b.querySelector('.pwa-full');
+      const mini = document.getElementById('pwaMiniBtn');
+      if (full) full.style.display = 'none';
+      if (mini) mini.style.display = 'inline-flex';
+      b.dataset.mini = '1';
+      b.style.width = 'auto';
+      b.style.maxWidth = 'none';
+      b.style.left = 'auto';
+      b.style.right = '12px';
+      b.style.transform = 'none';
+      b.style.padding = '8px 14px';
+      b.style.borderRadius = '999px';
+      syncBannerSpace();
+    }
+
+    function expandPwaBanner() {
+      const b = document.getElementById('pwaInstallBanner');
+      if (!b) return;
+      const full = b.querySelector('.pwa-full');
+      const mini = document.getElementById('pwaMiniBtn');
+      if (full) full.style.display = 'flex';
+      if (mini) mini.style.display = 'none';
+      b.dataset.mini = '0';
+      b.style.width = '92%';
+      b.style.maxWidth = '480px';
+      b.style.left = '50%';
+      b.style.right = 'auto';
+      b.style.transform = 'translateX(-50%)';
+      b.style.padding = '14px 18px';
+      b.style.borderRadius = '20px';
+      syncBannerSpace();
+      clearTimeout(pwaBannerTimer);
+      pwaBannerTimer = setTimeout(collapsePwaBanner, 12000);
+    }
 
     function closePwaBanner() {
+      clearTimeout(pwaBannerTimer);
       const banner = document.getElementById('pwaInstallBanner');
       if (banner) banner.style.display = 'none';
       sessionStorage.setItem('hidePwaBanner', 'true');
+      syncBannerSpace();
     }
 
     // 이미 설치된 앱(Standalone) 모드로 실행 중이면 설치 배너 숨김
@@ -6986,6 +7075,11 @@ document.addEventListener('click', function(e) {
       if (isStandalone || sessionStorage.getItem('hidePwaBanner') === 'true') {
         const banner = document.getElementById('pwaInstallBanner');
         if (banner) banner.style.display = 'none';
+        syncBannerSpace();
+      } else {
+        syncBannerSpace();
+        clearTimeout(pwaBannerTimer);
+        pwaBannerTimer = setTimeout(collapsePwaBanner, 12000);
       }
     });
 
