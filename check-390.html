@@ -2,72 +2,50 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>390px 검사용 (임시)</title>
+<title>390px 캡처용 (임시)</title>
 <style>
-  html,body{margin:0;background:#111;color:#fff;font:14px/1.4 -apple-system,sans-serif}
-  .row{display:flex;gap:16px;align-items:flex-start;padding:12px}
-  .box{border:1px solid #444}
-  iframe{border:0;display:block;background:#fff;overflow:hidden;scrollbar-width:none}
-  #out{padding:10px 14px;font:13px/1.55 monospace;white-space:pre-wrap;color:#7ee787}
-  h3{margin:8px 0;font-size:13px;color:#ddd}
+  html,body{margin:0;background:#222}
+  #f{border:0;display:block;background:#fff}
+  #out{position:fixed;right:8px;top:8px;max-width:300px;margin:0;padding:8px;
+       background:rgba(0,0,0,.75);color:#7ee787;font:11px/1.4 monospace;white-space:pre-wrap;z-index:9}
 </style>
 </head>
 <body>
-<div id="out">측정 중…</div>
-<div class="row">
-  <div>
-    <h3>① 지금·첫 화면 (390×844)</h3>
-    <div class="box"><iframe id="f1" width="390" height="844" scrolling="no" src="index.html"></iframe></div>
-  </div>
-  <div>
-    <h3>② 지금·홈 전체 (390×2600)</h3>
-    <div class="box"><iframe id="f2" width="390" height="2600" scrolling="no" src="index.html"></iframe></div>
-  </div>
-  <div>
-    <h3>③ 이전·첫 화면 (390×844)</h3>
-    <div class="box"><iframe id="f3" width="390" height="844" scrolling="no" src="index-before.html"></iframe></div>
-  </div>
-  <div>
-    <h3>④ 이전·홈 전체 (390×3400)</h3>
-    <div class="box"><iframe id="f4" width="390" height="3400" scrolling="no" src="index-before.html"></iframe></div>
-  </div>
-</div>
+<iframe id="f" width="390" height="844" scrolling="no"></iframe>
+<pre id="out">…</pre>
 <script>
-function hideBar(f){
-  try{ const d=f.contentDocument; if(d){ d.documentElement.style.overflow='hidden'; d.body.style.overflow='hidden'; } }catch(e){}
-}
-function measure(f){
-  hideBar(f);
-  const d=f.contentDocument, w=f.contentWindow;
-  const R=el=>{ if(!el) return null; const r=el.getBoundingClientRect(); return {x:Math.round(r.x),y:Math.round(r.y),w:Math.round(r.width),h:Math.round(r.height)}; };
-  const v=d.getElementById('familyIntroVideo');
-  return {
-    innerWidth:w.innerWidth, clientWidth:d.documentElement.clientWidth,
-    docHeight:Math.round(d.documentElement.scrollHeight),
-    docScrollWidth:Math.round(d.documentElement.scrollWidth),
-    header:R(d.querySelector('header')),
-    videoCard:R(d.querySelector('.video-card')),
-    video:R(v),
-    sosBtn:R(d.getElementById('sosBtn'))
-  };
-}
-function run(){
+const q = new URLSearchParams(location.search);
+const file = q.get('file') || 'index.html';
+const H = +(q.get('h') || 844);
+const Y = +(q.get('y') || 0);
+const f = document.getElementById('f');
+f.width = 390; f.height = H;
+f.src = file;
+f.onload = () => {
+  const d = f.contentDocument, w = f.contentWindow;
   try{
-    const a=measure(document.getElementById('f1'));
-    const b=measure(document.getElementById('f2'));
-    const c=measure(document.getElementById('f3'));
-    const e=measure(document.getElementById('f4'));
-    document.getElementById('out').textContent =
-      '① 지금 첫화면 '+JSON.stringify(a)+'\n② 지금 전체   '+JSON.stringify({docHeight:b.docHeight})+
-      '\n③ 이전 첫화면 '+JSON.stringify(c)+'\n④ 이전 전체   '+JSON.stringify({docHeight:e.docHeight});
-    document.title='now h='+a.header.h+' v='+a.video.w+'x'+a.video.h+' doc='+b.docHeight+' | before h='+c.header.h+' v='+c.video.w+'x'+c.video.h+' doc='+e.docHeight;
-  }catch(err){
-    document.getElementById('out').textContent='ERR '+err.message;
-    document.title='ERR '+err.message;
-  }
-}
-let n=0;
-const t=setInterval(()=>{ n++; run(); if(n>15) clearInterval(t); },700);
+    d.head.insertAdjacentHTML('beforeend',
+      '<style>html::-webkit-scrollbar{width:0!important;height:0!important}html{scrollbar-width:none!important}</style>');
+  }catch(e){}
+  setTimeout(()=>{ try{ const c=d.querySelector('[aria-label="설치 안내 닫기"]'); if(c) c.click(); }catch(e){} }, 500);
+  setTimeout(()=>{
+    w.scrollTo(0, Y);
+    setTimeout(()=>{
+      const R=el=>{ if(!el) return null; const r=el.getBoundingClientRect(); return {x:Math.round(r.x),y:Math.round(r.y),w:Math.round(r.width),h:Math.round(r.height)}; };
+      const v=d.getElementById('familyIntroVideo');
+      const m={
+        file, scrollY:Math.round(w.scrollY),
+        innerWidth:w.innerWidth, clientWidth:d.documentElement.clientWidth,
+        docHeight:Math.round(d.documentElement.scrollHeight),
+        docScrollWidth:Math.round(d.documentElement.scrollWidth),
+        header:R(d.querySelector('header')), video:R(v),
+        videoCard:R(d.querySelector('.video-card')), sosBtn:R(d.getElementById('sosBtn'))
+      };
+      document.getElementById('out').textContent = JSON.stringify(m,null,1);
+      document.title = 'h='+(m.header?m.header.h:'-')+' v='+(m.video?m.video.w+'x'+m.video.h:'-')+' doc='+m.docHeight+' y='+m.scrollY;
+    }, 350);
+  }, 1200);
+};
 </script>
 </body>
 </html>
