@@ -738,11 +738,20 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   .lead{font-size:20px}
 
   /* 헤더 */
-  header{padding:14px 14px !important;border-radius:18px !important;margin-bottom:12px !important}
+  header{padding:12px !important;border-radius:16px !important;margin-bottom:10px !important}
+  header > div{gap:10px !important;justify-content:flex-start !important}
+  header > div > div:first-child{width:46px !important;height:58px !important}
+  header > div > div:nth-child(2) > div:first-child{font-size:11px !important;padding:3px 9px !important;margin-bottom:4px !important;line-height:1.35 !important}
+  header h1{font-size:19px !important;line-height:1.25 !important;margin-bottom:4px !important}
+  header p{font-size:13px !important;line-height:1.4 !important;margin-bottom:6px !important}
+  header > div > div:nth-child(2) > div:last-child{margin-top:6px !important;gap:6px !important}
+  header > div > div:nth-child(2) > div:last-child button{font-size:12.5px !important;padding:7px 11px !important}
 
   /* 신호등 열 */
-  .signal-col{gap:10px;padding-bottom:4px}
+  .signal-col{gap:8px;padding-bottom:2px}
   .signal-name{font-size:15px}
+  .signal{padding:9px 12px !important}
+  .signal .lamp{width:40px !important;height:40px !important}
   .signal-text{font-size:17px;min-height:0}
   .sos-btn{font-size:19px;padding:12px 10px}
   .sos-hint{font-size:13px;line-height:1.3}
