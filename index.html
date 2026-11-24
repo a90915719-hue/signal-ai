@@ -6292,7 +6292,7 @@ const HYODO_MSG = "얘야, 엄마(아빠)가 요즘 'AI 신호등'으로 그림�
 function pay(what){
   stopTour(); nextAction = null;
   const [type, key] = what.split(":");
-  const item = type === "plan" ? { name: PLANS[key].name + " 요금제", price: PLANS[key].price, sub:"매달 자동 결제 · 언제든 해지" } : { name: ADDONS[key].name, price: ADDONS[key].price, sub:"이번 달만 한 번 결제" };
+  const item = type === "plan" ? { name: PLANS[key].name + " 요금제", price: PLANS[key].price, sub:"매달 한 번 입금 · 언제든 해지" } : { name: ADDONS[key].name, price: ADDONS[key].price, sub:"이번 달만 한 번 입금" };
   signal("green", "결제 방법을 고르세요");
   app.innerHTML = `<section class="screen">
     <button class="back" type="button" id="b">◀ 요금제로</button>
