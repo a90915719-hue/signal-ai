@@ -7083,6 +7083,12 @@ document.addEventListener('click', function(e) {
       }
     });
 
+    // 화면을 스크롤하면 큰 바가 내용을 가리지 않도록 바로 작은 단추로 접는다
+    window.addEventListener('scroll', () => {
+      const b = document.getElementById('pwaInstallBanner');
+      if (b && b.style.display !== 'none' && b.dataset.mini !== '1') collapsePwaBanner();
+    }, { passive: true });
+
     function goVoiceDraw() {
       if (typeof draw === 'function') {
         draw();
