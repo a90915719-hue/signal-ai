@@ -809,9 +809,6 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   #pwaBottomBar button span:nth-child(2){font-size:11px}
   #pwaInstallBanner{max-width:344px !important}
   #pwaInstallBanner .pwa-sub{display:none}
-  #pwaInstallBanner .pwa-full > div:last-child button:first-child{font-size:14px !important;padding:9px 12px !important}
-  #pwaMiniBtn{font-size:13px !important}
-  #pwaInstallBanner[data-mini="1"]{padding:6px 10px !important;right:6px !important}
   .upgrade{padding:12px}
   .up-card{padding:18px;border-radius:20px}
 }
@@ -7067,9 +7064,6 @@ document.addEventListener('click', function(e) {
         </button>
       </div>
     </div>
-    <button type="button" id="pwaMiniBtn" onclick="expandPwaBanner()" aria-label="앱 설치 안내 펼치기" style="display:none; background:transparent; border:none; color:#fde047; font-size:15px; font-weight:900; cursor:pointer; align-items:center; gap:6px; padding:0; white-space:nowrap;">
-      📲 앱 설치
-    </button>
   </div>
 
   <!-- 📱 스마트폰 하단 고정 원터치 앱 메뉴바 (시니어/초보자 극강 편의) -->
@@ -7121,45 +7115,30 @@ document.addEventListener('click', function(e) {
       if (banner) { banner.style.display = 'flex'; expandPwaBanner(); }
     });
 
-    /* ---------- 설치 안내 바: 펼침 / 작은 단추로 접기 ----------
-       펼친 바가 화면 가운데(파란 '누르기' 단추 등)를 오래 가리지 않도록
-       12초 뒤에는 오른쪽 아래 "📲 앱 설치" 작은 단추로 접고,
-       접힌 단추나 x 로 언제든 닫을 수 있게 한다. */
+    /* ---------- 설치 안내 바 ----------
+       펼친 바가 화면 가운데(파란 '누르기' 단추 등)를 가리지 않도록
+       스크롤하거나 8초가 지나면 바를 치우고, 앱 설치는 헤더의
+       "📱 홈화면에 앱 추가" 버튼으로 언제든 할 수 있게 한다. */
     let pwaBannerTimer = null;
 
     function syncBannerSpace() {
       const b = document.getElementById('pwaInstallBanner');
-      const open = !!b && b.style.display !== 'none' && b.dataset.mini !== '1';
+      const open = !!b && b.style.display !== 'none';
       document.body.classList.toggle('banner-open', open);
     }
 
     function collapsePwaBanner() {
       clearTimeout(pwaBannerTimer);
       const b = document.getElementById('pwaInstallBanner');
-      if (!b || b.style.display === 'none' || b.dataset.mini === '1') return;
-      const full = b.querySelector('.pwa-full');
-      const mini = document.getElementById('pwaMiniBtn');
-      if (full) full.style.display = 'none';
-      if (mini) mini.style.display = 'inline-flex';
-      b.dataset.mini = '1';
-      b.style.width = 'auto';
-      b.style.maxWidth = 'none';
-      b.style.left = 'auto';
-      b.style.right = '12px';
-      b.style.transform = 'none';
-      b.style.padding = '8px 14px';
-      b.style.borderRadius = '999px';
+      if (!b || b.style.display === 'none') return;
+      b.style.display = 'none';
       syncBannerSpace();
     }
 
     function expandPwaBanner() {
       const b = document.getElementById('pwaInstallBanner');
       if (!b) return;
-      const full = b.querySelector('.pwa-full');
-      const mini = document.getElementById('pwaMiniBtn');
-      if (full) full.style.display = 'flex';
-      if (mini) mini.style.display = 'none';
-      b.dataset.mini = '0';
+      b.style.display = 'flex';
       b.style.width = '92%';
       b.style.maxWidth = '480px';
       b.style.left = '50%';
@@ -7194,10 +7173,10 @@ document.addEventListener('click', function(e) {
       }
     });
 
-    // 화면을 스크롤하면 큰 바가 내용을 가리지 않도록 바로 작은 단추로 접는다
+    // 화면을 스크롤하면 큰 바가 내용을 가리지 않도록 바로 치운다
     window.addEventListener('scroll', () => {
       const b = document.getElementById('pwaInstallBanner');
-      if (b && b.style.display !== 'none' && b.dataset.mini !== '1') collapsePwaBanner();
+      if (b && b.style.display !== 'none') collapsePwaBanner();
     }, { passive: true });
 
     function goVoiceDraw() {
