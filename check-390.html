@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>390px 캡처용 (임시)</title>
+<style>
+  html,body{margin:0;background:#222}
+  #f{border:0;display:block;background:#fff}
+  #out{position:fixed;left:406px;top:8px;max-width:420px;margin:0;padding:10px;
+       background:rgba(0,0,0,.8);color:#7ee787;font:12px/1.5 monospace;white-space:pre-wrap;z-index:9}
+</style>
+</head>
+<body>
+<iframe id="f" width="390" height="844" scrolling="no" style="position:fixed;left:0;top:0"></iframe>
+<pre id="out">…</pre>
+<script>
+const q = new URLSearchParams(location.search);
+const file = q.get('file') || 'index.html';
+const H = +(q.get('h') || 844);
+const Y = +(q.get('y') || 0);
+const f = document.getElementById('f');
+f.width = 390; f.height = H;
+f.src = file + (file.includes('?')?'&':'?') + 'cb=' + (q.get('cb') || Date.now());
+f.onload = () => {
+  const d = f.contentDocument, w = f.contentWindow;
+  try{
+    d.head.insertAdjacentHTML('beforeend',
+      '<style>html::-webkit-scrollbar{width:0!important;height:0!important}html{scrollbar-width:none!important}</style>');
+  }catch(e){}
+  setTimeout(()=>{ try{ const c=d.querySelector('[aria-label="설치 안내 닫기"]'); if(c) c.click(); }catch(e){} }, 500);
+  setTimeout(()=>{
+    w.scrollTo(0, Y);
+    setTimeout(()=>{
+      const R=el=>{ if(!el) return null; const r=el.getBoundingClientRect(); return {top:Math.round(r.top+w.scrollY),bot:Math.round(r.bottom+w.scrollY),h:Math.round(r.height)}; };
+      const sb=d.getElementById('sirenBtn');
+      const m={
+        file, scrollY:Math.round(w.scrollY), vh:w.innerHeight, docHeight:Math.round(d.documentElement.scrollHeight),
+        header:R(d.querySelector('header')),
+        videoCard:R(d.querySelector('.video-card')),
+        sirenBtn:R(sb),
+        sirenText: sb?sb.textContent.trim():null,
+        lostBtn:R(d.getElementById('btnHomeLost')),
+        familyNote:R(d.querySelector('.family-note')),
+        homeTitle:R(d.querySelector('h1.home-title')),
+        goBtn:R(d.getElementById('go'))
+      };
+      document.getElementById('out').textContent = JSON.stringify(m,null,1);
+      document.title = 'siren@'+(m.sirenBtn?m.sirenBtn.top:'-')+' / vh='+m.vh;
+    }, 400);
+  }, 1300);
+};
+</script>
+</body>
+</html>
