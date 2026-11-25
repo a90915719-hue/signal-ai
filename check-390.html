@@ -33,16 +33,22 @@ f.onload = () => {
     setTimeout(()=>{
       const R=el=>{ if(!el) return null; const r=el.getBoundingClientRect(); return {top:Math.round(r.top+w.scrollY),bot:Math.round(r.bottom+w.scrollY),h:Math.round(r.height)}; };
       const sb=d.getElementById('sirenBtn');
+      const cs=el=>{ if(!el) return null; const s=w.getComputedStyle(el); return {mt:s.marginTop,mb:s.marginBottom,pt:s.paddingTop,pb:s.paddingBottom,gap:s.rowGap}; };
       const m={
         file, scrollY:Math.round(w.scrollY), vh:w.innerHeight, docHeight:Math.round(d.documentElement.scrollHeight),
         header:R(d.querySelector('header')),
+        videoSlot:R(d.querySelector('.video-slot')),
         videoCard:R(d.querySelector('.video-card')),
+        main:R(d.querySelector('main')),
+        screen:R(d.querySelector('section[data-home]')),
+        sirenCard:R(d.querySelector('.siren-card')),
         sirenBtn:R(sb),
         sirenText: sb?sb.textContent.trim():null,
         lostBtn:R(d.getElementById('btnHomeLost')),
         familyNote:R(d.querySelector('.family-note')),
         homeTitle:R(d.querySelector('h1.home-title')),
-        goBtn:R(d.getElementById('go'))
+        goBtn:R(d.getElementById('go')),
+        css: {videoSlot:cs(d.querySelector('.video-slot')), main:cs(d.querySelector('main')), screen:cs(d.querySelector('section[data-home]'))}
       };
       document.getElementById('out').textContent = JSON.stringify(m,null,1);
       document.title = 'siren@'+(m.sirenBtn?m.sirenBtn.top:'-')+' / vh='+m.vh;
