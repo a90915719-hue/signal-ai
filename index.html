@@ -747,6 +747,38 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
 .gov-card ul{margin:0;padding-left:1.1em;font-size:19px;display:flex;flex-direction:column;gap:6px;word-break:keep-all}
 
 /* ==========================================================
+   🆘 길 잃었을 때 · 보호자 바로 연결 (아이·어르신용 큰 버튼)
+   ========================================================== */
+.gd-card{display:flex;flex-direction:column;gap:12px;background:var(--surface);border:4px solid var(--stop);border-radius:22px;padding:16px;box-shadow:0 6px 18px rgba(217,58,43,0.12)}
+.gd-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.gd-name{font-family:var(--display);font-weight:400;font-size:30px;line-height:1.15;word-break:keep-all}
+.gd-num{font-family:var(--display);font-size:26px;color:var(--blue);font-variant-numeric:tabular-nums;letter-spacing:.02em;word-break:break-all}
+.gd-call{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:88px;padding:14px 12px;background:var(--go);color:#fff;border:0;border-radius:20px;text-decoration:none;text-align:center;font-family:var(--display);font-size:clamp(25px,7.4vw,34px);line-height:1.15;cursor:pointer;box-shadow:0 7px 0 #0B7A37;word-break:keep-all}
+.gd-call:active{transform:translateY(4px);box-shadow:0 3px 0 #0B7A37}
+.gd-loc{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:68px;padding:12px;background:var(--blue);color:#fff;border:0;border-radius:18px;font-family:var(--body);font-size:22px;font-weight:800;cursor:pointer;box-shadow:0 5px 0 #123B8F;word-break:keep-all}
+.gd-loc:active{transform:translateY(3px);box-shadow:0 2px 0 #123B8F}
+.gd-loc[disabled]{background:var(--off);box-shadow:none;color:var(--fg);cursor:default}
+.gd-call.sms{min-height:76px;font-size:clamp(21px,6vw,27px);background:var(--blue);box-shadow:0 6px 0 #123B8F}
+.gd-call.sms:active{box-shadow:0 2px 0 #123B8F}
+.gd-loc-box{display:flex;flex-direction:column;gap:10px;border:3px solid var(--blue);border-radius:16px;padding:12px;background:color-mix(in srgb,var(--blue) 7%,var(--surface))}
+.gd-loc-box.err{border-color:var(--wait);background:color-mix(in srgb,var(--wait) 12%,var(--surface))}
+.gd-loc-box .act{flex:0 0 auto;align-self:stretch;font-size:20px;padding:14px}
+.gd-loc-box > b{font-size:20px;line-height:1.4;word-break:keep-all}
+.gd-link{font-size:16px;font-weight:700;color:var(--blue);word-break:break-all}
+.gd-del{align-self:flex-end;background:none;border:0;color:var(--muted);font-family:var(--body);font-size:16px;font-weight:700;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:4px}
+.gd-form{display:flex;flex-direction:column;gap:12px;background:var(--surface);border:3px solid var(--line);border-radius:20px;padding:16px}
+.gd-form label{display:flex;flex-direction:column;gap:6px;font-size:19px;font-weight:800}
+.gd-form input{font:inherit;font-size:26px;font-weight:700;color:var(--fg);background:var(--bg);border:3px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0;width:100%;font-variant-numeric:tabular-nums}
+.gd-form input:focus{outline:4px solid var(--blue);outline-offset:2px}
+.gd-save{width:100%;min-height:66px;border:0;border-radius:18px;background:var(--blue);color:var(--blue-ink);font-family:var(--display);font-size:28px;cursor:pointer;box-shadow:0 6px 0 #123B8F}
+.gd-save:active{transform:translateY(3px);box-shadow:0 3px 0 #123B8F}
+.gd-empty{border:3px dashed var(--line);border-radius:18px;padding:16px;background:var(--surface)}
+.gd-empty > b{font-size:21px}
+.gd-empty p{margin:6px 0 0;font-size:18px;color:var(--muted);font-weight:600;line-height:1.5;word-break:keep-all}
+.gd-example{margin-top:12px;display:flex;flex-direction:column;gap:6px;background:var(--bg);border-radius:14px;padding:12px;font-size:17px;font-weight:700}
+.gd-example .ex-btn{background:var(--go);color:#fff;border-radius:12px;padding:12px;text-align:center;font-family:var(--display);font-size:22px;line-height:1.2}
+
+/* ==========================================================
    📱 핸드폰(390px 안팎) 화면에 맞춘 컴팩트 정리
    글씨 크기는 읽기 편하게 두고, 과하게 큰 여백·박스만 줄임
    ========================================================== */
@@ -908,6 +940,16 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   #btnHomeMySpace span:first-child{font-size:20px !important}
   #btnHomeGovRepair{padding:11px 10px !important;font-size:15.5px !important;border-radius:14px !important;margin-block:7px !important}
   #btnHomeGovRepair span:nth-child(2){font-size:16px !important}
+  #btnHomeLost{padding:11px 10px !important;margin-block:7px !important;border-radius:14px !important}
+  #btnHomeLost span:nth-child(1){font-size:22px !important}
+  #btnHomeLost span:nth-child(2){font-size:16.5px !important}
+  #btnHomeLost span:nth-child(3){font-size:11.5px !important}
+  .gd-card{padding:13px !important;gap:10px !important;border-width:3px !important}
+  .gd-name{font-size:26px}
+  .gd-num{font-size:22px}
+  .gd-call{min-height:76px !important}
+  .gd-loc{min-height:60px !important;font-size:20px !important}
+  .gd-form input{font-size:24px !important}
   #btnHomeKakao{padding:11px 12px !important;font-size:15.5px !important;border-radius:14px !important;margin-block:7px !important}
   #btnHomeVoice{padding:9px 12px !important;border-radius:14px !important;margin-top:8px !important}
   #btnHomeVoice span:nth-child(1){font-size:22px !important}
@@ -1882,6 +1924,13 @@ function home(){
       </div>
     </div>
 
+    <!-- 🆘 길 잃었을 때 · 보호자 바로 연결 (아이·어르신용 큰 버튼) -->
+    <button class="act" type="button" id="btnHomeLost" onclick="lostGuardian()" style="background:linear-gradient(135deg,#b91c1c,#ef4444); color:#fff; border:2.5px solid #fecaca; border-radius:18px; padding:14px 16px; margin-block:10px; width:100%; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; box-shadow:0 6px 18px rgba(220,38,38,0.35);">
+      <span style="font-size:26px; line-height:1.1;">🆘</span>
+      <span style="font-size:20px; font-weight:900; letter-spacing:-0.4px;">길 잃었을 때 · 보호자 바로 연결</span>
+      <span style="font-size:13px; font-weight:800; color:#fee2e2;">아이·어르신 폰에 부모님 번호를 저장해 두세요</span>
+    </button>
+
     <div class="free-promise">
       <b>가입 안 해도, 지금 바로 무료</b>
       <div class="fp-row"><span>가입 없이 바로</span><span>카드 등록 없음</span><span>몰래 결제 절대 없음</span></div>
@@ -1958,6 +2007,7 @@ function home(){
 /* 모든 기능을 한 화면에: 신호등 색으로 네 묶음 */
 const SERVICES = [
   {ico:"긴", name:"긴급 전화",        sub:"119 · 112 · 사기 조심",     g:"urgent", fn:()=>emergency(),   kw:"긴급 119 112 사고 위험 사기 보이스피싱 성범죄 응급 도와 살려 SOS"},
+  {ico:"길", name:"길 잃었을 때",      sub:"보호자에게 바로 전화 · 위치 문자", g:"urgent", fn:()=>lostGuardian(), kw:"길 잃었어요 미아 아이 어린이 어르신 보호자 부모님 엄마 아빠 전화 위치 문자 집 주소 안 보여"},
   {ico:"차", name:"자동차 긴급",       sub:"고장, 견인, 대리운전, 택시",  g:"urgent", fn:()=>carHelp(),     kw:"자동차 차 고장 견인 고속도로 펑크 배터리 방전 보험 긴급출동 사고 정비 주유소 기름 충전 대리 대리운전 택시 콜택시"},
   {ico:"왕", name:"집으로 오는 의료",  sub:"방문진료, 방문간호, 돌봄",   g:"urgent", fn:()=>homeCare(),    kw:"방문진료 왕진 방문간호 방문요양 돌봄 요양 장기요양 거동 못 집으로 의사 간호사"},
   {ico:"병", name:"병원 · 관공서",     sub:"병원, 약국, 경찰서, 소방서", g:"urgent", fn:()=>nearby(),      kw:"병원 약국 응급실 경찰서 소방서 파출소 주민센터 구청 우체국 내과 치과 안과 아파 아픈 아퍼"},
@@ -2306,6 +2356,14 @@ function processSmartVoiceSearch(q) {
     return;
   }
 
+  // (7-1) 🆘 길 잃었을 때 · 보호자 바로 연결
+  if (/길.{0,3}잃|잃어버렸|잃어버림|미아|보호자|아이가 안 보|아이 ?잃|엄마한테|아빠한테/i.test(q)) {
+    speakGuide("길을 잃었을 때 보호자에게 바로 전화하는 화면으로 갑니다.");
+    if (status) status.innerHTML = `✅ <b>길 잃었을 때 · 보호자 연결</b>로 이동합니다...`;
+    setTimeout(() => { lostGuardian(); }, 800);
+    return;
+  }
+
   // (8) 긴급 전화 119/112
   if (/119|112|긴급|응급|사기|보이스피싱|위급|살려/i.test(q)) {
     speakGuide("긴급 전화로 즉시 연결합니다.");
@@ -2477,6 +2535,15 @@ function sections(autoVoice){
             <span style="font-size:15px; color:var(--muted); font-weight:700;">수선유지급여, 에너지효율개선, 누수 보험 청구</span>
           </div>
         </button>
+
+        <!-- 8. 🆘 길 잃었을 때 · 보호자 바로 연결 -->
+        <button type="button" onclick="lostGuardian()" style="background:var(--surface); border:2.5px solid #dc2626; border-radius:18px; padding:18px; text-align:left; cursor:pointer; display:flex; align-items:center; gap:14px; box-shadow:0 4px 12px rgba(220,38,38,0.14);">
+          <span style="font-size:34px; background:rgba(220,38,38,0.1); width:60px; height:60px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">🆘</span>
+          <div>
+            <b style="font-size:22px; font-weight:900; color:var(--fg); display:block;">길 잃었을 때 · 보호자 연결</b>
+            <span style="font-size:15px; color:var(--muted); font-weight:700;">아이·어르신이 안 보일 때 바로 전화</span>
+          </div>
+        </button>
       </div>
     </div>
 
@@ -2568,6 +2635,11 @@ function emergency(){
       <a class="sos-call blue" href="tel:112"><span class="num">112</span><span class="what">도둑 · 위험할 때 · 사기 당했을 때</span><span class="tap">눌러서 전화 걸기</span></a>
     </div>
     <p class="hint left">버튼이 안 되면 핸드폰 전화기에서 <b>119</b>나 <b>112</b>를 직접 누르세요. 휴대폰이 잠겨 있어도 긴급 전화는 걸려요.</p>
+    <button class="prep-card" type="button" id="toLost" style="border-color:var(--blue); background:color-mix(in srgb,var(--blue) 8%,var(--surface));">
+      <span class="prep-badge" style="background:var(--blue)">길 잃음</span>
+      <b>아이·어르신이 안 보여요</b>
+      <span>미리 저장한 부모님·보호자 번호로 바로 전화하고, 내 위치를 문자로 보내요 ▶</span>
+    </button>
     <div class="sig-card green">
       <div class="sig-head"><span class="mini-lamps"><i></i><i></i><i class="lit"></i></span><b>가까운 병원 · 응급실 · 약국</b></div>
       <div class="sig-btns">
@@ -2653,6 +2725,7 @@ function emergency(){
   const $ = id=>document.getElementById(id);
   $("b").onclick = home; $("home2").onclick = home;
   $("prep").onclick = ()=>sosSetup(null, 0);
+  $("toLost").onclick = lostGuardian;
   $("toNear").onclick = nearby;
   $("toCarE").onclick = carHelp;
   if($("toNear2")) $("toNear2").onclick = nearby;
@@ -4410,6 +4483,195 @@ function govRepair(){
   $("b").onclick = sections;
   bindRegion(govRepair);
   $("toFixit").onclick = fixit;
+}
+
+/* ---------- 🆘 길 잃었을 때 · 보호자 바로 연결 ---------- */
+const GD_KEY = "signal-ai-guardians";
+const GD_MAX = 3;
+function getGuardians(){
+  try{
+    const raw = JSON.parse(localStorage.getItem(GD_KEY) || "[]");
+    return Array.isArray(raw) ? raw.filter(g => g && g.tel).slice(0, GD_MAX) : [];
+  }catch(e){ return []; }
+}
+function saveGuardians(list){
+  try{ localStorage.setItem(GD_KEY, JSON.stringify(list.slice(0, GD_MAX))); }catch(e){}
+}
+function gdOnlyNum(v){ return String(v || "").replace(/[^0-9+]/g, ""); }
+function gdPretty(v){
+  const d = String(v || "").replace(/[^0-9]/g, "");
+  if(d.length === 11) return d.slice(0,3) + "-" + d.slice(3,7) + "-" + d.slice(7);
+  if(d.length === 10 && d.startsWith("02")) return d.slice(0,2) + "-" + d.slice(2,6) + "-" + d.slice(6);
+  if(d.length === 10) return d.slice(0,3) + "-" + d.slice(3,6) + "-" + d.slice(6);
+  if(d.length === 9 && d.startsWith("02")) return d.slice(0,2) + "-" + d.slice(2,5) + "-" + d.slice(5);
+  if(d.length === 8) return d.slice(0,4) + "-" + d.slice(4);
+  return d ? d : String(v || "");
+}
+
+function lostGuardian(){
+  stopTour(); clearTimeout(timer); nextAction = null;
+  signal("red", "큰 초록 전화 버튼을 누르면 바로 걸려요");
+  const list = getGuardians();
+  const full = list.length >= GD_MAX;
+  app.innerHTML = `<section class="screen">
+    <button class="back" type="button" id="b">◀ 뒤로</button>
+    <div class="step">🆘 길 잃었을 때</div>
+    <h1>길을 잃었어요<br>보호자에게 바로 전화</h1>
+    <p class="lead">아이·어르신이 길을 잃었을 때, 미리 저장해 둔 엄마·아빠 번호로 <b>큰 버튼 하나면</b> 전화가 걸려요.</p>
+
+    <div class="guide-red"><span class="ic">🆘</span><span>전화가 안 되면 <b>112</b>(경찰)에 전화해서 "아이를 잃어버렸어요" 하고 말하세요.</span></div>
+
+    <h2 class="group" style="word-break:keep-all">📞 누르면 바로 전화</h2>
+    ${list.length ? list.map((g,i)=>`
+      <div class="gd-card">
+        <div class="gd-head"><b class="gd-name">${esc(g.name || "보호자")}</b><span class="gd-num">${esc(gdPretty(g.tel))}</span></div>
+        <a class="gd-call" href="tel:${esc(gdOnlyNum(g.tel))}" aria-label="${esc(g.name || "보호자")}에게 바로 전화 걸기">📞 ${esc(g.name || "보호자")}에게 전화 걸기</a>
+        <button class="gd-loc" type="button" data-loc="${i}">📍 내 위치 문자로 보내기</button>
+        <div id="gdOut${i}"></div>
+        <button class="gd-del" type="button" data-del="${i}">✕ 이 번호 지우기</button>
+      </div>`).join("")
+      : `<div class="gd-empty">
+          <b>아직 저장한 보호자 번호가 없어요</b>
+          <p>아래 칸에 엄마나 아빠 전화번호를 저장해 두면, 이 자리에 큰 전화 버튼이 생겨요.</p>
+          <div class="gd-example">
+            <span>이렇게 나와요</span>
+            <span><b>엄마</b> · 010-1234-5678</span>
+            <span class="ex-btn">📞 엄마에게 전화 걸기</span>
+            <span class="ex-btn" style="background:var(--blue)">📍 내 위치 문자로 보내기</span>
+          </div>
+        </div>`}
+
+    <h2 class="group" style="word-break:keep-all">✍️ 보호자 번호 저장${full ? " (3명까지)" : ""}</h2>
+    ${full ? `<div class="note-box"><b>3명까지 저장할 수 있어요.</b><br>새 번호를 넣으려면 위에서 <b>이 번호 지우기</b>를 먼저 눌러 주세요.</div>` : `<div class="gd-form">
+      <div class="chips" id="gdChips">
+        ${["엄마","아빠","할머니","할아버지","아들","딸","보호자"].map(n=>`<button class="chip" type="button" data-nm="${n}">${n}</button>`).join("")}
+      </div>
+      <label>부르는 이름
+        <input id="gdName" type="text" maxlength="12" placeholder="예: 엄마" autocomplete="off" enterkeyhint="next">
+      </label>
+      <label>전화번호
+        <input id="gdTel" type="tel" inputmode="tel" maxlength="16" placeholder="예: 010-1234-5678" autocomplete="off">
+      </label>
+      <button class="gd-save" type="button" id="gdSave">💾 이 번호 저장하기</button>
+      <p class="hint left">번호는 <b>이 핸드폰에만</b> 저장돼요. 밖으로 보내지 않아요.</p>
+    </div>`}
+
+    <h2 class="group" style="word-break:keep-all">👶 이렇게 알려주세요</h2>
+    <ul class="safe-tips">
+      <li>가게 안으로 들어가서 <b>"엄마한테 전화하게 해주세요"</b> 하고 부탁해요</li>
+      <li>이 화면의 <b>큰 초록색 전화 버튼</b>을 어른에게 보여주세요</li>
+      <li>아무도 없으면 <b>112</b>에 전화해 "아이를 잃어버렸다"고 말해요</li>
+      <li>집 주소가 기억 안 나면 <b>나만의 공간 → 안심 기억장</b>에 집 주소를 저장해 두세요</li>
+    </ul>
+
+    <div class="small-links">
+      <button class="act plain" type="button" id="toSpace">🔒 집 주소 저장하러 가기</button>
+      <button class="act plain" type="button" id="home2">처음으로 가기</button>
+    </div>
+  </section>`;
+
+  const $ = id=>document.getElementById(id);
+  $("b").onclick = home; $("home2").onclick = home;
+  $("toSpace").onclick = mySpace;
+  app.querySelectorAll("[data-loc]").forEach(b=>b.onclick=()=>gdSendLoc(+b.dataset.loc));
+  app.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>gdDelGuardian(+b.dataset.del));
+  app.querySelectorAll("#gdChips .chip").forEach(c=>c.onclick=()=>{
+    const n = $("gdName"); if(!n) return;
+    n.value = c.dataset.nm;
+    app.querySelectorAll("#gdChips .chip").forEach(x=>x.classList.remove("on"));
+    c.classList.add("on");
+  });
+  if($("gdSave")) $("gdSave").onclick = gdSaveGuardian;
+}
+
+function gdSaveGuardian(){
+  const nameEl = document.getElementById("gdName");
+  const telEl = document.getElementById("gdTel");
+  if(!nameEl || !telEl) return;
+  const name = (nameEl.value || "").trim().slice(0, 12) || "보호자";
+  const tel = (telEl.value || "").trim();
+  const digits = gdOnlyNum(tel).replace(/^\+/, "");
+  if(!/^[0-9]{9,11}$/.test(digits)){
+    alert("전화번호를 다시 확인해 주세요.\n예: 010-1234-5678");
+    telEl.focus();
+    return;
+  }
+  const list = getGuardians();
+  const same = list.findIndex(g=>gdOnlyNum(g.tel).replace(/^\+/, "") === digits);
+  if(same >= 0) list[same] = Object.assign({}, list[same], { name: name, tel: tel });
+  else list.push({ id: Date.now(), name: name, tel: tel });
+  saveGuardians(list);
+  speakKo(name + " 번호를 저장했어요. 큰 전화 버튼을 누르면 바로 걸려요.");
+  lostGuardian();
+}
+
+function gdDelGuardian(i){
+  const list = getGuardians();
+  const g = list[i];
+  if(!g) return;
+  if(!confirm((g.name || "보호자") + " 번호를 지울까요?")) return;
+  list.splice(i, 1);
+  saveGuardians(list);
+  speakKo("번호를 지웠어요.");
+  lostGuardian();
+}
+
+/* 📍 현재 위치를 문자로 보내기 (지도 링크 + 문자, 안 되면 복사) */
+function gdSendLoc(i){
+  const list = getGuardians();
+  const g = list[i];
+  const out = document.getElementById("gdOut" + i);
+  if(!g || !out) return;
+  const num = gdOnlyNum(g.tel);
+  const name = g.name || "보호자";
+  const btn = app.querySelector('[data-loc="' + i + '"]');
+
+  const fail = (why)=>{
+    out.innerHTML = gdLocFailHtml(i, num, name, why);
+    gdBindLocOut(i);
+    if(btn){ btn.disabled = false; btn.textContent = "📍 내 위치 문자로 보내기"; }
+  };
+
+  if(!navigator.geolocation){ fail("이 브라우저에서는 위치를 찾을 수 없어요"); return; }
+
+  if(btn){ btn.disabled = true; btn.textContent = "📍 위치를 찾는 중이에요…"; }
+  out.innerHTML = `<p class="hint left">📍 위치를 찾는 중이에요. 창이 뜨면 <b>허용</b>을 눌러 주세요.</p>`;
+
+  try{
+    navigator.geolocation.getCurrentPosition(function(pos){
+      const la = pos.coords.latitude.toFixed(6), ln = pos.coords.longitude.toFixed(6);
+      const link = "https://maps.google.com/?q=" + la + "," + ln;
+      const msg = name + ", 저 지금 길을 잃었어요. 여기가 제 위치예요 → " + link;
+      out.innerHTML = `<div class="gd-loc-box">
+        <b>📍 위치를 찾았어요</b>
+        <a class="gd-call sms" href="sms:${esc(num)}?&body=${encodeURIComponent(msg)}">📨 ${esc(name)}에게 위치 문자 보내기</a>
+        <a class="gd-link" href="${link}" target="_blank" rel="noopener">${link}</a>
+        <button class="act plain" type="button" data-copy="${encodeURIComponent(msg)}">📋 위치 링크 복사하기</button>
+        <p class="hint left">문자 앱이 안 열리면 <b>위치 링크 복사하기</b>를 눌러 카카오톡으로 붙여넣어 보내세요.</p>
+      </div>`;
+      gdBindLocOut(i);
+      if(btn){ btn.disabled = false; btn.textContent = "📍 내 위치 다시 찾기"; }
+    }, function(){
+      fail("위치를 가져오지 못했어요 (위치 허용이 꺼져 있거나 건물 안일 수 있어요)");
+    }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 });
+  }catch(e){
+    fail("위치를 가져오지 못했어요");
+  }
+}
+function gdLocFailHtml(i, num, name, why){
+  const msg = name + ", 저 지금 길을 잃었어요. 지금 있는 곳을 찾아서 알려 드릴게요.";
+  return `<div class="gd-loc-box err">
+    <b>📍 ${esc(why)}</b>
+    <a class="gd-call sms" href="sms:${esc(num)}?&body=${encodeURIComponent(msg)}">📨 위치 없이 문자 보내기</a>
+    <button class="act plain" type="button" data-retry="${i}">📍 다시 찾아보기</button>
+    <p class="hint left">핸드폰 설정에서 <b>위치(GPS)</b>를 켜면 위치까지 함께 보낼 수 있어요.</p>
+  </div>`;
+}
+function gdBindLocOut(i){
+  const out = document.getElementById("gdOut" + i);
+  if(!out) return;
+  out.querySelectorAll("[data-copy]").forEach(b=>b.onclick=()=>copyMemoText(decodeURIComponent(b.dataset.copy)));
+  out.querySelectorAll("[data-retry]").forEach(b=>b.onclick=()=>gdSendLoc(+b.dataset.retry));
 }
 
 /* ---------- 이사 · 부동산 ---------- */
