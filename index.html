@@ -779,6 +779,17 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
 .gd-example .ex-btn{background:var(--go);color:#fff;border-radius:12px;padding:12px;text-align:center;font-family:var(--display);font-size:22px;line-height:1.2}
 
 /* ==========================================================
+   🔊 위급 사이렌 (삐뽀삐뽀 경보음 · 누르면 다시 꺼짐)
+   ========================================================== */
+.siren-card{display:flex;flex-direction:column;gap:8px;background:color-mix(in srgb,var(--stop) 9%,var(--surface));border:3px solid var(--stop);border-radius:20px;padding:12px;margin-block:4px}
+.siren-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:84px;padding:14px 12px;border:0;border-radius:18px;background:linear-gradient(135deg,#b91c1c,#ef4444);color:#fff;font-family:var(--display);font-size:clamp(25px,6.8vw,32px);line-height:1.2;cursor:pointer;box-shadow:0 7px 0 #8A2018;word-break:keep-all}
+.siren-btn:active{transform:translateY(4px);box-shadow:0 3px 0 #8A2018}
+.siren-btn.on{background:linear-gradient(135deg,#111827,#374151);box-shadow:0 7px 0 #0B1220;animation:sirenPulse .95s ease-in-out infinite}
+.siren-hint{margin:0;font-size:15px;font-weight:700;color:var(--muted);line-height:1.45;text-align:center;word-break:keep-all}
+@keyframes sirenPulse{0%,100%{box-shadow:0 0 0 0 rgba(220,38,38,.6),0 7px 0 #0B1220}50%{box-shadow:0 0 0 11px rgba(220,38,38,0),0 7px 0 #0B1220}}
+@media (prefers-reduced-motion:reduce){.siren-btn.on{animation:none}}
+
+/* ==========================================================
    📱 핸드폰(390px 안팎) 화면에 맞춘 컴팩트 정리
    글씨 크기는 읽기 편하게 두고, 과하게 큰 여백·박스만 줄임
    ========================================================== */
@@ -2645,6 +2656,7 @@ function emergency(){
       <a class="sos-call blue" href="tel:112"><span class="num">112</span><span class="what">도둑 · 위험할 때 · 사기 당했을 때</span><span class="tap">눌러서 전화 걸기</span></a>
     </div>
     <p class="hint left">버튼이 안 되면 핸드폰 전화기에서 <b>119</b>나 <b>112</b>를 직접 누르세요. 휴대폰이 잠겨 있어도 긴급 전화는 걸려요.</p>
+    ${sirenHtml()}
     <button class="prep-card" type="button" id="toLost" style="border-color:var(--blue); background:color-mix(in srgb,var(--blue) 8%,var(--surface));">
       <span class="prep-badge" style="background:var(--blue)">길 잃음</span>
       <b>아이·어르신이 안 보여요</b>
@@ -2736,6 +2748,7 @@ function emergency(){
   $("b").onclick = home; $("home2").onclick = home;
   $("prep").onclick = ()=>sosSetup(null, 0);
   $("toLost").onclick = lostGuardian;
+  sirenBind();
   $("toNear").onclick = nearby;
   $("toCarE").onclick = carHelp;
   if($("toNear2")) $("toNear2").onclick = nearby;
@@ -4518,6 +4531,102 @@ function gdPretty(v){
   return d ? d : String(v || "");
 }
 
+/* ---------- 🔊 위급 사이렌: 외부 음원 없이 삐뽀삐뽀 경보음 ---------- */
+let sirenOn = false, sirenTimer = null, sirenOsc = null, sirenGain = null, sirenHi = false;
+
+function sirenHtml(){
+  return `<div class="siren-card">
+      <button class="siren-btn" type="button" id="sirenBtn" aria-pressed="false">🔊 위급 사이렌 울리기</button>
+      <p class="siren-hint" id="sirenHint">무음 모드를 끄면 소리가 더 크게 울려요 · 주변에 도움을 요청할 때 누르세요</p>
+    </div>`;
+}
+
+function sirenPaint(){
+  const b = document.getElementById("sirenBtn");
+  if(!b) return;
+  if(sirenOn){
+    b.classList.add("on");
+    b.textContent = "🔊 사이렌 울리는 중 · 다시 누르면 꺼짐";
+    b.setAttribute("aria-pressed", "true");
+  }else{
+    b.classList.remove("on");
+    b.textContent = "🔊 위급 사이렌 울리기";
+    b.setAttribute("aria-pressed", "false");
+  }
+}
+
+function sirenBind(){
+  const b = document.getElementById("sirenBtn");
+  if(b) b.onclick = sirenToggle;
+  sirenPaint();
+}
+
+/* 두 음을 번갈아 내며 살짝 흘리는 ‘삐뽀삐뽀’ */
+function sirenSwap(){
+  if(!sirenOsc || !audioCtx) return;
+  sirenHi = !sirenHi;
+  const t = audioCtx.currentTime;
+  try{
+    sirenOsc.frequency.cancelScheduledValues(t);
+    sirenOsc.frequency.setValueAtTime(sirenHi ? 1060 : 740, t);
+    sirenOsc.frequency.linearRampToValueAtTime(sirenHi ? 1000 : 780, t + .32);
+  }catch(e){}
+}
+
+function sirenStart(){
+  try{
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    if(audioCtx.state === "suspended") audioCtx.resume();
+    if(!sirenOsc || !sirenGain){
+      sirenOsc = audioCtx.createOscillator();
+      sirenGain = audioCtx.createGain();
+      sirenOsc.type = "square";
+      sirenOsc.frequency.value = 740;
+      sirenGain.gain.value = .0001;
+      sirenOsc.connect(sirenGain).connect(audioCtx.destination);
+      sirenOsc.start();
+    }
+    const t = audioCtx.currentTime;
+    sirenGain.gain.cancelScheduledValues(t);
+    sirenGain.gain.setValueAtTime(.0001, t);
+    sirenGain.gain.exponentialRampToValueAtTime(.2, t + .03);
+  }catch(e){}
+  sirenOn = true; sirenHi = false;
+  sirenSwap();
+  clearInterval(sirenTimer);
+  sirenTimer = setInterval(sirenSwap, 380);
+  try{ if(navigator.vibrate) navigator.vibrate([450, 150, 450, 150, 450]); }catch(e){}
+  sirenPaint();
+}
+
+function sirenStop(){
+  sirenOn = false;
+  clearInterval(sirenTimer); sirenTimer = null;
+  try{ if(navigator.vibrate) navigator.vibrate(0); }catch(e){}
+  try{
+    if(sirenGain && audioCtx && typeof sirenGain.gain.cancelScheduledValues === "function"){
+      const t = audioCtx.currentTime;
+      sirenGain.gain.cancelScheduledValues(t);
+      sirenGain.gain.setTargetAtTime(.0001, t, .02);
+    }
+  }catch(e){}
+  const osc = sirenOsc, g = sirenGain;
+  sirenOsc = null; sirenGain = null;
+  if(osc) setTimeout(()=>{ try{ osc.stop(); osc.disconnect(); }catch(e){} try{ g && g.disconnect(); }catch(e){} }, 200);
+  sirenPaint();
+}
+
+function sirenToggle(){ sirenOn ? sirenStop() : sirenStart(); }
+
+/* 화면을 벗어나면 사이렌이 저절로 멈춘다 */
+(function sirenWatch(){
+  try{
+    new MutationObserver(()=>{ if(sirenOn && !document.getElementById("sirenBtn")) sirenStop(); })
+      .observe(app, {childList:true, subtree:true});
+  }catch(e){}
+  try{ window.addEventListener("pagehide", ()=>{ if(sirenOn) sirenStop(); }); }catch(e){}
+})();
+
 function lostGuardian(){
   stopTour(); clearTimeout(timer); nextAction = null;
   signal("red", "큰 초록 전화 버튼을 누르면 바로 걸려요");
@@ -4530,6 +4639,8 @@ function lostGuardian(){
     <p class="lead">아이·어르신이 길을 잃었을 때, 미리 저장해 둔 엄마·아빠 번호로 <b>큰 버튼 하나면</b> 전화가 걸려요.</p>
 
     <div class="guide-red"><span class="ic">🆘</span><span>전화가 안 되면 <b>112</b>(경찰)에 전화해서 "아이를 잃어버렸어요" 하고 말하세요.</span></div>
+
+    ${sirenHtml()}
 
     <h2 class="group" style="word-break:keep-all">📞 누르면 바로 전화</h2>
     ${list.length ? list.map((g,i)=>`
@@ -4583,6 +4694,7 @@ function lostGuardian(){
   const $ = id=>document.getElementById(id);
   $("b").onclick = home; $("home2").onclick = home;
   $("toSpace").onclick = mySpace;
+  sirenBind();
   app.querySelectorAll("[data-loc]").forEach(b=>b.onclick=()=>gdSendLoc(+b.dataset.loc));
   app.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>gdDelGuardian(+b.dataset.del));
   app.querySelectorAll("#gdChips .chip").forEach(c=>c.onclick=()=>{
