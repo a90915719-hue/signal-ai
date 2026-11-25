@@ -790,6 +790,15 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
 @media (prefers-reduced-motion:reduce){.siren-btn.on{animation:none}}
 
 /* ==========================================================
+   🏠 홈 첫 화면 긴급 묶음: 사이렌 + 보호자 연결 + 가족 안내 멘트
+   ========================================================== */
+.home-siren{margin:0 0 8px}
+.family-note{position:relative;margin:2px 0 8px;padding:15px 16px;border-radius:18px;background:linear-gradient(160deg,#fffbeb,#fef3c7);border:2.5px solid #f59e0b;box-shadow:0 4px 14px rgba(245,158,11,.18);text-align:left}
+.family-note .fn-label{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:900;color:#b45309;margin-bottom:6px;letter-spacing:-.2px}
+.family-note .fn-say{margin:0;font-size:20px;font-weight:800;line-height:1.5;color:#3f2d0b;word-break:keep-all}
+.family-note .fn-say b{color:#b91c1c}
+
+/* ==========================================================
    📱 핸드폰(390px 안팎) 화면에 맞춘 컴팩트 정리
    글씨 크기는 읽기 편하게 두고, 과하게 큰 여백·박스만 줄임
    ========================================================== */
@@ -955,6 +964,13 @@ button:focus-visible{outline:4px solid var(--wait);outline-offset:3px}
   #btnHomeLost span:nth-child(1){font-size:22px !important}
   #btnHomeLost span:nth-child(2){font-size:16.5px !important}
   #btnHomeLost span:nth-child(3){font-size:11.5px !important}
+  /* 홈 첫 화면 긴급 묶음 (사이렌 + 보호자 + 가족 멘트) */
+  .siren-card.home-siren{margin:0 0 7px !important;padding:10px !important;border-radius:16px !important;gap:6px !important}
+  .siren-card.home-siren .siren-btn{min-height:80px !important;font-size:25px !important}
+  .siren-card.home-siren .siren-hint{font-size:13px !important}
+  .family-note{padding:12px 13px !important;border-radius:14px !important;margin-block:0 7px !important}
+  .family-note .fn-label{font-size:13.5px !important;margin-bottom:4px !important}
+  .family-note .fn-say{font-size:17px !important;line-height:1.5 !important}
   .gd-card{padding:13px !important;gap:10px !important;border-width:3px !important}
   .gd-name{font-size:26px}
   .gd-num{font-size:22px}
@@ -1838,6 +1854,20 @@ function home(){
   clearTimeout(timer); stopTour(); nextAction = null; signal("green", "파란 동그라미를 누르세요");
   app.innerHTML = `<section class="screen" data-home="1">
 
+    <!-- 🚨 위급 사이렌 + 🆘 길 잃었을 때 · 보호자 바로 연결 (홈 첫 화면에서 바로 누르기) -->
+    ${sirenHtml({ico:"🚨", cls:"home-siren"})}
+    <button class="act" type="button" id="btnHomeLost" onclick="lostGuardian()" style="background:linear-gradient(135deg,#b91c1c,#ef4444); color:#fff; border:2.5px solid #fecaca; border-radius:18px; padding:14px 16px; margin-block:0 8px; width:100%; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; box-shadow:0 6px 18px rgba(220,38,38,0.35);">
+      <span style="font-size:26px; line-height:1.1;">🆘</span>
+      <span style="font-size:20px; font-weight:900; letter-spacing:-0.4px;">길 잃었을 때 · 보호자 바로 연결</span>
+      <span style="font-size:13px; font-weight:800; color:#fee2e2;">아이·어르신 폰에 부모님 번호를 저장해 두세요</span>
+    </button>
+
+    <!-- 💬 엄마·가족이 아이·어르신께 알려 주는 말 -->
+    <div class="family-note">
+      <div class="fn-label">💬 엄마·가족이 알려 주는 말</div>
+      <p class="fn-say">"위급하거나 길을 잃었을 땐 이 버튼을 누르세요! <b>큰 사이렌</b>도 울리고 <b>내 위치</b>도 엄마·가족에게 바로 알려 줍니다."</p>
+    </div>
+
     <div class="logo" role="img" aria-label="나만의 AI 국민 신호등 로고" style="display:flex; align-items:center; gap:16px; margin-bottom:14px;">
       <div style="width:58px; height:74px; flex-shrink:0; filter:drop-shadow(0 4px 12px rgba(251,191,36,0.5));">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 400" width="100%" height="100%">
@@ -1935,13 +1965,6 @@ function home(){
       </div>
     </div>
 
-    <!-- 🆘 길 잃었을 때 · 보호자 바로 연결 (아이·어르신용 큰 버튼) -->
-    <button class="act" type="button" id="btnHomeLost" onclick="lostGuardian()" style="background:linear-gradient(135deg,#b91c1c,#ef4444); color:#fff; border:2.5px solid #fecaca; border-radius:18px; padding:14px 16px; margin-block:10px; width:100%; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:2px; box-shadow:0 6px 18px rgba(220,38,38,0.35);">
-      <span style="font-size:26px; line-height:1.1;">🆘</span>
-      <span style="font-size:20px; font-weight:900; letter-spacing:-0.4px;">길 잃었을 때 · 보호자 바로 연결</span>
-      <span style="font-size:13px; font-weight:800; color:#fee2e2;">아이·어르신 폰에 부모님 번호를 저장해 두세요</span>
-    </button>
-
     <div class="free-promise">
       <b>가입 안 해도, 지금 바로 무료</b>
       <div class="fp-row"><span>가입 없이 바로</span><span>카드 등록 없음</span><span>몰래 결제 절대 없음</span></div>
@@ -2022,6 +2045,7 @@ function home(){
   bind("okHome", checkin);
   bind("wxHome", weather);
   bind("signBtn", signup);
+  sirenBind();
   if (window.syncHomeVideoSlot) window.syncHomeVideoSlot();
 }
 
@@ -4534,9 +4558,11 @@ function gdPretty(v){
 /* ---------- 🔊 위급 사이렌: 외부 음원 없이 삐뽀삐뽀 경보음 ---------- */
 let sirenOn = false, sirenTimer = null, sirenOsc = null, sirenGain = null, sirenHi = false;
 
-function sirenHtml(){
-  return `<div class="siren-card">
-      <button class="siren-btn" type="button" id="sirenBtn" aria-pressed="false">🔊 위급 사이렌 울리기</button>
+function sirenHtml(opts){
+  const ico = (opts && opts.ico) || "🔊";
+  const cls = (opts && opts.cls) ? "siren-card " + opts.cls : "siren-card";
+  return `<div class="${cls}">
+      <button class="siren-btn" type="button" id="sirenBtn" aria-pressed="false" data-ico="${ico}">${ico} 위급 사이렌 울리기</button>
       <p class="siren-hint" id="sirenHint">무음 모드를 끄면 소리가 더 크게 울려요 · 주변에 도움을 요청할 때 누르세요</p>
     </div>`;
 }
@@ -4550,7 +4576,7 @@ function sirenPaint(){
     b.setAttribute("aria-pressed", "true");
   }else{
     b.classList.remove("on");
-    b.textContent = "🔊 위급 사이렌 울리기";
+    b.textContent = (b.dataset.ico || "🔊") + " 위급 사이렌 울리기";
     b.setAttribute("aria-pressed", "false");
   }
 }
